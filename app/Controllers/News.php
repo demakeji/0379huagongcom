@@ -6,19 +6,19 @@ use App\Models\NewsModel;
 
 // Add this line to import the class.
 use CodeIgniter\Exceptions\PageNotFoundException;
-
+require_once __DIR__ . '/../../vendor/autoload.php';
 class News extends BaseController
 {
     public function index()
     {
-        $model = model(NewsModel::class);
+       /*  $model = model(NewsModel::class);
 
         $data = [
             'news_list' => $model->getNews(),
             'title'     => 'News archive',
-        ];
+        ]; */
 
-        return view('templates/header', $data)
+        return view('templates/header')
             . view('news/index')
             . view('templates/footer');
     }
