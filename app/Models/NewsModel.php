@@ -7,6 +7,8 @@ class NewsModel extends Model
 {
     protected $table = 'news';
 
+    protected $allowedFields = ['title', 'slug', 'body'];
+
     /**
      * @param bool|string $slug
      *
@@ -15,9 +17,13 @@ class NewsModel extends Model
     public function getNews(bool|string $slug = false): ?array
     {
         if ($slug === false) {
-            return $this->findAll();
+            $str = $this->findAll();
+            return $str;
         }
 
-        return $this->where(['slug' => $slug])->first();
+
+
+        $str = $this->where(['slug' => $slug])->first();
+        return $str;
     }
 }
