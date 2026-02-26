@@ -9,6 +9,8 @@ class Profile extends BaseController
 {
     public function index()
     {
-        //
+        return view('templates/header')
+            . view('profile/index')
+            . view('templates/footer');
     }
 }

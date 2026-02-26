@@ -9,6 +9,8 @@ class Feedback extends BaseController
 {
     public function index()
     {
-        //
+        return view('templates/header')
+            . view('feedback/index')
+            . view('templates/footer');
     }
 }

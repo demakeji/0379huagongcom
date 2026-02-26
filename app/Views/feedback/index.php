@@ -1,29 +1,55 @@
 {{include file='../header.inc.html'}}
-<!--引用百度地图API-->
-<style type="text/css">
-    html,body{margin:0;padding:0;}
-    .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
-    .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
-</style>
-<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
 <div id="container" class="page-wrap">
   <div id="content" class="fr">
-    <div class="crumb-nav">当前位置：<a href="index.html">首页</a><em>></em>公司地址</div>
+    <div class="crumb-nav">当前位置：<a href="index.html">首页</a><em>></em>在线留言</div>
     <div class="inner-main">
-      <h3 class="title-bar"><strong class="fl">公司地址</strong><span class="fr"></span></h3>
-      <div class="control-box">
-        <!--<ul class="contact">
-          <li><strong>地址：</strong>河南省洛阳市洛龙区洛龙大道331号鑫华化工市场</li>
-		  <li><strong>联系人：</strong>裴经理</li>
-          <li><strong>电话：</strong>0379-65236168</li>
-          <li><strong>传真：</strong>0379-65236168</li>
-          <li><strong>邮编：</strong>471000</li>
-        </ul>
-        -->
-		<!--百度地图容器-->
-        <div style="width:975px;height:550px;border:#ccc solid 1px;" id="dituContent"></div>
+      <h3 class="title-bar"><strong class="fl">在线留言</strong><span class="fr"></span></h3>
+      <div class="control-box feedback">
+        <p class="tips"><strong>亲爱的客户：</strong><br />
+          如果您对本公司有任何意见、建议和问题，请及时告诉我们，您将得到满意答复。标有<span>*</span>号的为必填项。</p>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="date-form-table">
+          <tr>
+            <th width="20%" scope="row"><span>*</span>主　题：</th>
+            <td width="80%"><input name="textfield2" type="text" class="text text3" id="textfield2" />
+              <span class="c-red ml10">请填写留言主题。</span></td>
+          </tr>
+          <tr>
+            <th valign="top" scope="row"><span>*</span>留言内容：</th>
+            <td><textarea name="textarea" id="textarea" cols="45" rows="5"></textarea>
+              <span class="c-red ml10">请填写留言内容。</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><span>*</span>电子邮箱：</th>
+            <td><input name="textfield7" type="text" class="text" id="textfield8" />
+              <span class="c-red ml10">请填写电子邮箱。</span></td>
+          </tr>
+          <tr>
+            <th scope="row">手　机：</th>
+            <td><input name="textfield7" type="text" class="text" id="textfield9" /></td>
+          </tr>
+          <tr>
+            <th scope="row">固定电话：</th>
+            <td><input name="textfield7" type="text" class="text" id="textfield10" /></td>
+          </tr>
+          <tr>
+            <th scope="row">地　址：</th>
+            <td><input name="textfield5" type="text" class="text text3" id="textfield4" /></td>
+          </tr>
+          <tr>
+            <th scope="row">邮　编：</th>
+            <td><input name="textfield3" type="text" class="text" id="textfield3" /></td>
+          </tr>
+          <tr>
+            <th scope="row"><span>*</span>验证码：</th>
+            <td><input type="text" name="textfield4" id="textfield5" class="text text2" />
+              <a href="#"><img src="images/annex_img.png" width="58" height="22" alt="验证码" /></a><span class="c-red ml10">请填写验证码。</span></td>
+          </tr>
+          <tr>
+            <th scope="row">&nbsp;</th>
+            <td><input name="button2" type="submit" class="button" id="button2" value="提&nbsp;&nbsp;交" />
+          </tr>
+        </table>
       </div>
-	  
     </div>
   </div>
   <!--<div id="sidebar" class="fl">
@@ -37,7 +63,7 @@
     <div class="contact-us boder">
       <h3><a href="contact.html" title="联系我们">联系我们</a></h3>
       <ul>
-        <li><strong>地址：</strong>河南省洛阳市洛龙区洛龙大道331号鑫华化工市场</li>
+        <li><strong>地址：</strong>河南省洛阳市洛龙区龙门大道331号鑫华化工市场</li>
 		<li><strong>联系人：</strong>裴经理</li>
 		<li><strong>手机：</strong>15037908000</li>
         <li><strong>电话：</strong>0379-65236168</li>
@@ -48,101 +74,4 @@
   </div>-->
   <div class="clear"></div>
 </div>
-<script type="text/javascript">
-    //创建和初始化地图函数：
-    function initMap(){
-        createMap();//创建地图
-        setMapEvent();//设置地图事件
-        addMapControl();//向地图添加控件
-        addMarker();//向地图中添加marker
-    }
-    
-    //创建地图函数：
-    function createMap(){
-        var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
-        var point = new BMap.Point(112.478385,34.635547);//定义一个中心点坐标
-        map.centerAndZoom(point,13);//设定地图的中心点和坐标并将地图显示在地图容器中
-        window.map = map;//将map变量存储在全局
-    }
-    
-    //地图事件设置函数：
-    function setMapEvent(){
-        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
-        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
-        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
-        map.enableKeyboard();//启用键盘上下左右键移动地图
-    }
-    
-    //地图控件添加函数：
-    function addMapControl(){
-        //向地图中添加缩放控件
-	var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_SMALL});
-	map.addControl(ctrl_nav);
-        //向地图中添加缩略图控件
-	var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
-	map.addControl(ctrl_ove);
-        //向地图中添加比例尺控件
-	var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
-	map.addControl(ctrl_sca);
-    }
-    
-  //标注点数组
-    var markerArr = [{title:"洛阳德玛化工",content:"地址：洛阳鑫华化工市场5排16号<br/>销售1：15303858325<br/>销售2：15303866852",point:"112.488274|34.647782",isOpen:1,icon:{w:21,h:21,l:0,t:0,x:6,lb:5}}
-		 ];
-    //创建marker
-    function addMarker(){
-        for(var i=0;i<markerArr.length;i++){
-            var json = markerArr[i];
-            var p0 = json.point.split("|")[0];
-            var p1 = json.point.split("|")[1];
-            var point = new BMap.Point(p0,p1);
-			var iconImg = createIcon(json.icon);
-            var marker = new BMap.Marker(point,{icon:iconImg});
-			var iw = createInfoWindow(i);
-			var label = new BMap.Label(json.title,{"offset":new BMap.Size(json.icon.lb-json.icon.x+10,-20)});
-			marker.setLabel(label);
-            map.addOverlay(marker);
-            label.setStyle({
-                        borderColor:"#808080",
-                        color:"#333",
-                        cursor:"pointer"
-            });
-			
-			(function(){
-				var index = i;
-				var _iw = createInfoWindow(i);
-				var _marker = marker;
-				_marker.addEventListener("click",function(){
-				    this.openInfoWindow(_iw);
-			    });
-			    _iw.addEventListener("open",function(){
-				    _marker.getLabel().hide();
-			    })
-			    _iw.addEventListener("close",function(){
-				    _marker.getLabel().show();
-			    })
-				label.addEventListener("click",function(){
-				    _marker.openInfoWindow(_iw);
-			    })
-				if(!!json.isOpen){
-					label.hide();
-					_marker.openInfoWindow(_iw);
-				}
-			})()
-        }
-    }
-    //创建InfoWindow
-    function createInfoWindow(i){
-        var json = markerArr[i];
-        var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>"+json.content+"</div>");
-        return iw;
-    }
-    //创建一个Icon
-    function createIcon(json){
-        var icon = new BMap.Icon("http://app.baidu.com/map/images/us_mk_icon.png", new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
-        return icon;
-    }
-    
-    initMap();//创建和初始化地图
-</script>
 {{include file='../footer.inc.html'}}
