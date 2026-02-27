@@ -1,10 +1,6 @@
 <?php
 
 namespace App\Controllers;
-// 第一步：强制引入Composer自动加载器（关键！）
-// 路径说明：__DIR__ 是当前文件目录（app/Controllers）
-// ../../ 回退到项目根目录，找到vendor/autoload.php
-require_once __DIR__ . '/../../vendor/autoload.php';
 use App\Controllers\BaseController;
 use App\Models\HproductsModel;
 use CodeIgniter\HTTP\ResponseInterface;

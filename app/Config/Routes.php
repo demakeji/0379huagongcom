@@ -27,5 +27,3 @@ $routes->get('contact', 'Contact::index');
 
 $routes->get('pages', [Pages::class, 'view']);
 $routes->get('(:segment)', [Pages::class, 'view']);
-
-
