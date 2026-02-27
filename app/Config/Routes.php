@@ -1,9 +1,9 @@
 <?php
 
-use App\Controllers\Hproducts;
-use App\Controllers\News;
-use App\Controllers\Pages;
-use CodeIgniter\Router\RouteCollection;
+use App\Controllers\Front\Hproducts;
+use App\Controllers\Front\News;
+use App\Controllers\Front\Pages;
+use CodeIgniter\Router\FrontRouteCollection;
 
 /**
  * @var RouteCollection $routes
