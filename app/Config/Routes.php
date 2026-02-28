@@ -3,31 +3,31 @@
 use App\Controllers\Front\Hproducts;
 use App\Controllers\Front\News;
 use App\Controllers\Front\Pages;
-use CodeIgniter\Router\FrontRouteCollection;
-
+use App\Controllers\Front\Profile;
+use App\Controllers\Front\Feedback;
+use App\Controllers\Front\Contact;
 use App\Controllers\Admin\Admin;
+use CodeIgniter\Router\FrontRouteCollection;
 
 /**
  * @var RouteCollection $routes
  */
-//$routes->get('/', 'home::index');
+$routes->get('admin', [Admin::class, 'index']);
 $routes->get('/', [Hproducts::class, 'index']);
 $routes->get('hproducts', [Hproducts::class, 'index']);
 $routes->get('hproducts/(:segment)', [Hproducts::class, 'show']);
 $routes->get('hproducts/detail/(:num)', [[Hproducts::class, 'detail'], '$1']);
 
-$routes->get('news', 'News::index');
+$routes->get('news', [News::class,'index']);
 $routes->get('news/new', [News::class, 'new']); // Add this line
 $routes->post('news', [News::class, 'create']); // Add this line
 $routes->get('news/(:segment)', [News::class, 'show']);
 
-$routes->get('profile', 'Profile::index');
+$routes->get('profile', [Profile::class, 'index']);
 
-$routes->get('feedback', 'Feedback::index');
+$routes->get('feedback', [Feedback::class, 'index']);
 
-$routes->get('contact', 'Contact::index');
+$routes->get('contact', [Contact::class, 'index']);
 
-$routes->get('pages', [Pages::class, 'view']);
-$routes->get('(:segment)', [Pages::class, 'view']);
-
-$routes->get('admin', [Admin::class, 'index']);
+// $routes->get('pages', [Pages::class, 'view']);
+// $routes->get('(:segment)', [Pages::class, 'view']);

@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{{$meta_title}}_后台管理系统</title>
-<link href="{{$ADMIN_URL_ROOT}}/img/frame.css" rel="stylesheet" type="text/css" />
-<script src="{{$ADMIN_URL_ROOT}}/img/jquery.js" language="javascript" type="text/javascript"></script>
-<script src="{{$ADMIN_URL_ROOT}}/img/frame.js" language="javascript" type="text/javascript"></script>
+<link href="img/frame.css" rel="stylesheet" type="text/css" />
+<script src="img/jquery.js" language="javascript" type="text/javascript"></script>
+<script src="img/frame.js" language="javascript" type="text/javascript"></script>
 </head>
 <body class="showmenu">
 
@@ -32,7 +32,7 @@
  
 <div class="left">
 	<div class="menu" id="menu">
-		 <iframe src="index_menu.php" id="menufra" name="menu" frameborder="0"></iframe>
+		 <iframe src="templates/indexMenu.php" id="menufra" name="menu" frameborder="0"></iframe>
 	</div>
 </div>
  
