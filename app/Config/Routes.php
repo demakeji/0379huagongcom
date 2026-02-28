@@ -5,6 +5,8 @@ use App\Controllers\Front\News;
 use App\Controllers\Front\Pages;
 use CodeIgniter\Router\FrontRouteCollection;
 
+use App\Controllers\Admin\Admin;
+
 /**
  * @var RouteCollection $routes
  */
@@ -27,3 +29,5 @@ $routes->get('contact', 'Contact::index');
 
 $routes->get('pages', [Pages::class, 'view']);
 $routes->get('(:segment)', [Pages::class, 'view']);
+
+$routes->get('admin', [Admin::class, 'index']);
