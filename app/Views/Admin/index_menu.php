@@ -1,32 +1,33 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>{{$meta_title}}_左侧菜单</title>
-<link rel="stylesheet" href="img/base.css" type="text/css" />
+<link rel="stylesheet" href="/img/base.css" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script language="javascript" type="text/javascript" src="js/ajax.js"></script>
+<script language="javascript" type="text/javascript" src="/img/js/ajax.js"></script>
 <script language='javascript'>var curopenItem = '1';</script>
-<script language="javascript" type="text/javascript" src="js/leftmenu.js"></script>
+<script language="javascript" type="text/javascript" src="/img/js/leftmenu.js"></script>
 <style>
 div {padding:0px;margin:0px;}
 body {padding:0px;margin:auto;text-align:center;background-color:#eff5ed;
-	background:url(img/leftmenu_bg.gif);padding-left:3px;overflow:scroll;overflow-x:hidden;}
-dl.bitem {clear:both;width:140px;margin:0px 0px 5px 12px;background:url(img/menubg_open.gif) repeat-x;}
+	background:url(/img/leftmenu_bg.gif);padding-left:3px;overflow:scroll;overflow-x:hidden;}
+dl.bitem {clear:both;width:140px;margin:0px 0px 5px 12px;background:url(/img/menubg_open.gif) repeat-x;}
 dl.bitem dt { height:25px; line-height:25px; padding-left:35px; cursor:pointer;}
 dl.bitem dt b {	color:#4D6C2F;}
 dl.bitem dd {padding:3px 3px 3px 3px; background-color:#fff;}
 div.items {clear:both;padding:0px;height:0px;}
 .fllct {float:left;width:85px;}
 .flrct {padding-top:3px;float:left;}
-.sitemu li {padding:0px 0px 0px 18px;line-height:22px;background:url(img/arr4.gif) no-repeat 5px 9px;}
+.sitemu li {padding:0px 0px 0px 18px;line-height:22px;background:url(/img/arr4.gif) no-repeat 5px 9px;}
 ul { padding-top:3px;}
 li { height:22px;}
-a.mmac div{background:url(img/leftbg2.gif) no-repeat;height:37px!important;height:47px;
+a.mmac div{background:url(/img/leftbg2.gif) no-repeat;height:37px!important;height:47px;
 	padding:6px 4px 4px 10px;word-wrap: break-word;	word-break : break-all;	font-weight:bold;color:#325304;}
-a.mm div{background:url(img/leftmbg1.gif) no-repeat;height:37px!important;height:47px;padding:6px 4px 4px 10px;
+a.mm div{background:url(/img/leftmbg1.gif) no-repeat;height:37px!important;height:47px;padding:6px 4px 4px 10px;
 	word-wrap: break-word;	word-break : break-all;	font-weight:bold;color:#475645;	cursor:pointer;}
-a.mm:hover div{background:url(img/leftbg2.gif) no-repeat;color:#4F7632;}
+a.mm:hover div{background:url(/img/leftbg2.gif) no-repeat;color:#4F7632;}
 .mmf{height:1px;padding:5px 7px 5px 7px;}
-#mainct{padding-top:8px;background: url(img/idnbg1.gif) repeat-y;}
+#mainct{padding-top:8px;background: url(/img/idnbg1.gif) repeat-y;}
 </style>
 <base target="main" />
 </head>
@@ -84,7 +85,7 @@ a.mm:hover div{background:url(img/leftbg2.gif) no-repeat;color:#4F7632;}
 						<ul class='sitemu'>
 							<li><a href='prodcate_admin.php' target='main'>产品类目</a></li>
 							<li><a href='prodcate_admin.php' target='main'>类目属性</a></li>
-							<li><a href='product_admin.php' target='main'>产品列表</a></li>
+							<li><a href='product_admin' target='main'>产品列表</a></li>
 							<li><a href='product_admin.php?do=add' target='main'>新增产品</a></li>
 							<li><a href='brand_admin.php' target='main'>美妆品牌</a></li>
 							<li><a href='mproduct_admin.php' target='main'>美妆列表</a></li>
@@ -116,7 +117,7 @@ a.mm:hover div{background:url(img/leftbg2.gif) no-repeat;color:#4F7632;}
 	</tr>
 	<tr>
 		<td width='26'></td>
-		<td width='160' valign='top'><img src='img/idnbgfoot.gif' /></td>
+		<td width='160' valign='top'><img src='/img/idnbgfoot.gif' /></td>
 	</tr>
 </table>
 

@@ -7,11 +7,24 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Admin extends BaseController
 {
+
+
     public function index()
     {
-        return view("Admin/index.php")
-        .view("Admin/indexBody.php")
-        .view("Admin/indexMenu.php");
-        
+        $data['meta_title'] = "洛阳化工网";
+
+        return view("Admin/index.php", $data);
+    }
+
+    public function indexBody()
+    {
+        $data['meta_title'] = "洛阳化工网";
+
+        return view("Admin/index_body", $data);
+    }
+
+    public function indexMenu()
+    {
+        return view("Admin/index_menu");
     }
 }

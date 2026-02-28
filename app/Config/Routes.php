@@ -7,12 +7,18 @@ use App\Controllers\Front\Profile;
 use App\Controllers\Front\Feedback;
 use App\Controllers\Front\Contact;
 use App\Controllers\Admin\Admin;
+use App\Controllers\Admin\Product;
 use CodeIgniter\Router\FrontRouteCollection;
 
 /**
  * @var RouteCollection $routes
  */
 $routes->get('admin', [Admin::class, 'index']);
+$routes->get('admin/index_menu', [Admin::class, 'indexMenu']);
+$routes->get('admin/index_body', [Admin::class, 'indexBody']);
+$routes->get('admin/product_admin', [Product::class, 'index']);
+
+
 $routes->get('/', [Hproducts::class, 'index']);
 $routes->get('hproducts', [Hproducts::class, 'index']);
 $routes->get('hproducts/(:segment)', [Hproducts::class, 'show']);

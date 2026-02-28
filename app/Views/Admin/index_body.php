@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{{$meta_title}}_管理员后台-首页</title>
 <base target="_self">
-<link rel="stylesheet" type="text/css" href="img/base.css" />
-<link rel="stylesheet" type="text/css" href="img/indexbody.css" />
+<link rel="stylesheet" type="text/css" href="/img/base.css" />
+<link rel="stylesheet" type="text/css" href="/img/indexbody.css" />
 <script language='javascript' src='js/ajax.js'></script>
 </head>
 <body leftmargin="8" topmargin='8' bgcolor="#FFFFFF">
@@ -12,12 +12,12 @@
 <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td>
-     <div style='float:left;padding-left:200px;'>欢迎使用{{$meta_title}}</div>
+     <div style='float:left;padding-left:200px;'>欢迎使用<?= esc($meta_title) ?></div>
      <div id='' style='float:right;padding-right:8px;'><!--  //保留位置（顶右）  --></div>
    </td>
   </tr>
   <tr>
-    <td height="1" background="img/sp_bg.gif" style='padding:0px'></td>
+    <td height="1" background="/img/sp_bg.gif" style='padding:0px'></td>
   </tr>
 </table>
  

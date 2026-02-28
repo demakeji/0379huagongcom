@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{{$meta_title}}_后台管理系统</title>
@@ -32,13 +32,13 @@
  
 <div class="left">
 	<div class="menu" id="menu">
-		 <iframe src="templates/indexMenu.php" id="menufra" name="menu" frameborder="0"></iframe>
+		 <iframe id="menufra" name="menu" frameborder="0" src="admin/index_menu"></iframe>
 	</div>
 </div>
  
 <div class="right">
 	<div class="main">
-		<iframe id="main" name="main" frameborder="0" src="index_body.php"></iframe>
+		<iframe id="main" name="main" frameborder="0" src="admin/index_body"></iframe>
 	</div>
 </div>
  
