@@ -12,7 +12,7 @@ class Admin extends BaseController
     public function index()
     {
         $data['meta_title'] = "洛阳化工网";
-
+        
         return view("Admin/index.php", $data);
     }
 

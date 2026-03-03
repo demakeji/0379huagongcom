@@ -11,7 +11,6 @@ class Hproducts extends BaseController
     {
         $model = model(HproductsModel::class);
         $data['hproducts_list'] = $model->getHporducts();
-        //var_dump($data);
         
         return view('Front/templates/header', $data)
             . view('Front/products/index')

@@ -46,9 +46,12 @@ class HproductsModel extends Model
 
     public function getHporducts(string|bool|null $title = false): ?array
     {
-        if ($title === false || $title == null) {
-            return $this->findAll();
+        if ($title === false || $title == null) 
+        {
+            $str = $this->findAll();
+            return $str;
         }
+        
         $str = $this->where(['title' => $title])->first();
         return $str;
     }

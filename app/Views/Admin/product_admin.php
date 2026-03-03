@@ -269,15 +269,15 @@ function ok(ref){
 		<td width="5%">更新时间</td>
 	    <td width="6%">操作</td>
 	  </tr> 
-	  {{foreach from=$result item=gg}}
+	  <?php foreach ($result as $gg): ?>
 	  <tr height="26" align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#EDF7D0';"
 	 	 			onMouseOut="javascript:this.bgColor='#FFFFFF';">
-		<td>{{$gg.Hpid}}</td>
-		<td id="title{{$gg.Hpid}}" >{{$gg.title}}</td>
-		<td><input name="hanliang" type="text" value="{{$gg.hanliang}}" size="10"></td>
-		<td><input name="guige" type="text" value="{{$gg.guige}}" size="10"></td>
-		<td><input name="jiage" type="text" value="{{$gg.jiage}}" size="10"></td>
-		<td><input name="kucun" type="text" value="{{$gg.kucun}}" size="10"></td>
+		<td><?= $gg['Hpid']?></td>
+		<td id="title<?= esc($gg['Hpid']) ?>" ><?= esc($gg['title']) ?></td>
+		<td><input name="hanliang" type="text" value="<? esc($gg['hanliang'])?>" size="10"></td>
+		<td><input name="guige" type="text" value="<?= esc($gg['guige']) ?>" size="10"></td>
+		<td><input name="jiage" type="text" value="<?= esc($gg['jiage']) ?>" size="10"></td>
+		<td><input name="kucun" type="text" value="库存" size="10"></td>
 		<!--<td>{{if $gg.Pdate!=0}}{{$gg.Pdate|date_format:"%Y-%m-%d"}}{{else}}{{/if}}</td>
 		<td>{{$gg.Pleast}}</td>
 		<td>{{$gg.Pgross}}</td>
@@ -286,19 +286,22 @@ function ok(ref){
 		<td>{{$gg.Pcontent}}</td>
 		<td>{{$gg.IsTop}}</td>
 		<td>{{if $gg.IsHide}}<font color="#b2b">隐藏</font>{{/if}}</td>
-		--><td>{{$gg.Ptime|date_format:"%Y-%m-%d"}}</td>
-		<td>{{$gg.Utime|date_format:"%Y-%m-%d"}}</td>
+		-->
+		<td><?= esc($gg['Ptime']) ?></td>
+		<td><?= esc($gg['Utime']) ?></td>
 		<td align="center">
-			<a href="product_admin.php?do=edit&area={{$gg.AreaCode}}&Hpid={{$gg.Hpid}}&orderby={{$orderby}}&page={{$page}}">编辑</a>&nbsp|&nbsp;
-			<a href="product_admin.php?do=del&Hpid={{$gg.Hpid}}" onClick="return showhidetip({{$gg.Hpid}})" >删除</a>
+			<a href="product_admin.php?do=edit&area={{$gg['AreaCode'])}}&Hpid=<?= esc($gg['Hpid']) ?>&orderby={{$orderby}}&page=“{{$page}}">编辑</a>&nbsp|&nbsp;
+			<a href="product_admin.php?do=del&Hpid="<?= esc($gg['Hpid']) ?>" onClick="return showhidetip(<?= esc($gg['Hpid']) ?>" >删除</a>
 		</td>
 	  </tr>
-	  {{/foreach}}
+	  <?php endforeach ?>
 	  {{if $pn>1}}
 	  <tr bgcolor="#F1FDE3"> 
 		<td height="36" colspan="9" align="center">
 			<div class="pagelistbox">
-				<span>当前第 <font color="FF6600">{{$page}}</font> 页,共 {{$pn}} 页/ {{$total}} 条记录</span>	
+				<span><?= $pager->simpleLinks() ?></span>
+				<!-- <span><?= $pager->links() ?></span> -->
+				<!-- <span>当前第 <font color="FF6600">{{$page}}</font> 页,共 {{$pn}} 页/ {{$total}} 条记录</span>	
 				{{if $page>1}}
 					{{if $page>1}}
 				<a class='indexPage' href='?do=main&area={{$area}}&orderby={{$orderby}}&page=1'>首页</a>
@@ -314,7 +317,7 @@ function ok(ref){
 				<span>
 					跳转至<input type="text" id="page_select" name="page_select" value="{{$page}}" size="4" style="width:30px;height:18px;" />
 					&nbsp;<input type="button" value="GO" size="10" onClick="gopage()" style="padding:2px 10px;" />
-				</span>
+				</span> -->
 				<script>
 					function gopage(){				
 						var page=document.getElementById('page_select').value;				
