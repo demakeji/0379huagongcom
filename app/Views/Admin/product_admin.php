@@ -299,9 +299,9 @@ function ok(ref){
 	  <tr bgcolor="#F1FDE3"> 
 		<td height="36" colspan="9" align="center">
 			<div class="pagelistbox">
-				<span><?= $pager->simpleLinks() ?></span>
-				<!-- <span><?= $pager->links() ?></span> -->
-				<!-- <span>当前第 <font color="FF6600">{{$page}}</font> 页,共 {{$pn}} 页/ {{$total}} 条记录</span>	
+				<!-- <span><?= $pager->simpleLinks() ?></span>
+				<span><?= $pager->links() ?></span> -->
+				<span>当前第 <font color="FF6600">{{$page}}</font> 页,共 {{$pn}} 页/ {{$total}} 条记录</span>	
 				{{if $page>1}}
 					{{if $page>1}}
 				<a class='indexPage' href='?do=main&area={{$area}}&orderby={{$orderby}}&page=1'>首页</a>
@@ -317,7 +317,7 @@ function ok(ref){
 				<span>
 					跳转至<input type="text" id="page_select" name="page_select" value="{{$page}}" size="4" style="width:30px;height:18px;" />
 					&nbsp;<input type="button" value="GO" size="10" onClick="gopage()" style="padding:2px 10px;" />
-				</span> -->
+				</span>
 				<script>
 					function gopage(){				
 						var page=document.getElementById('page_select').value;				

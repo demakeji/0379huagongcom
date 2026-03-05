@@ -13,12 +13,19 @@ class Product extends BaseController
         $model = model(HproductsModel::class);
         // $data['result'] = $model->getHporducts();
         
+        $pager = service('pager');
+
+        $page    = (int) ($this->request->getGet('page') ?? 1);
+        $perPage = 10;
+        $total   = 200;
+
+        // Call makeLinks() to make pagination links.
+        $pager_links = $pager->makeLinks($page, $perPage, $total);
+
         $data = [
-            'result' => $model->paginate(10),
-            'pager' => $model->pager,
+            // ...
+            'pager_links' => $pager_links,
         ];
-
-
 
         return view('Admin/product_admin', $data);
     }
