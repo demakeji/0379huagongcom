@@ -35,7 +35,7 @@ function ok(ref){
 </script>
 <div class="container">
 	<!-- 添加或编辑内容 -->
-	{{if $do == 'add'|| $do=='edit'}}
+	<?php if ($do == 'add'|| $do == 'edit'): ?>
 	<script type="text/javascript">
 	
 	function checkform(){
@@ -69,7 +69,7 @@ function ok(ref){
     				<img alt="" src="{{$one.image}}" width="200" height="200">
     			</td>
     		</tr>
-    		{{if $cateattr}}
+    		<?php if (empty($cateattr)): ?>
     		{{foreach key=tk item=ca from=$cateattr}}
     		<tr class="prodcate">
     			<td align="right"><strong>{{$ca.CAname}}：</strong></td>
@@ -79,7 +79,7 @@ function ok(ref){
     			</td>
     		</tr>
     		{{/foreach}}
-    		{{/if}}
+    		<?php endif ?>
     		<tr>
     			<td align="right"><span class="red"> * </span><strong>产品标题：</strong></td>
     			<td>
@@ -206,7 +206,7 @@ function ok(ref){
     	</table>
     </form>
 	<!-- 内容列表 -->
-    {{else}}
+    <?php else: ?>
 	<style type="text/css">
 	.rb{ border-right:1px solid #666666 }
 	.tb{ border-top:1px solid #666666 }
@@ -295,27 +295,25 @@ function ok(ref){
 		</td>
 	  </tr>
 	  <?php endforeach ?>
-	  {{if $pn>1}}
+	  <?php if ($pager->getPageCount()>1): ?>
 	  <tr bgcolor="#F1FDE3"> 
 		<td height="36" colspan="9" align="center">
 			<div class="pagelistbox">
-				<!-- <span><?= $pager->simpleLinks() ?></span>
-				<span><?= $pager->links() ?></span> -->
-				<span>当前第 <font color="FF6600">{{$page}}</font> 页,共 {{$pn}} 页/ {{$total}} 条记录</span>	
-				{{if $page>1}}
-					{{if $page>1}}
-				<a class='indexPage' href='?do=main&area={{$area}}&orderby={{$orderby}}&page=1'>首页</a>
-					{{/if}}		
-				<a class='prevPage' href='?do=main&area={{$area}}&orderby={{$orderby}}&page={{$page-1}}'>上页</a>
-				{{/if}}
-				{{if $page<$pn}}
-				<a class='nextPage' href='?do=main&area={{$area}}&orderby={{$orderby}}&page={{$page+1}}'>下页</a> 
-					{{if $pn>2}}
-				<a class='endPage' href='?do=main&area={{$area}}&orderby={{$orderby}}&page={{$pn}}'>末页</a>
-					{{/if}}
-				{{/if}}
+				<span>当前第 <font color="FF6600"><?= $pager->getCurrentPage()?></font> 页,共 <?= $pager->getPageCount() ?> 页/ <?= $pager->getTotal() ?> 条记录</span>	
+				<?php if ($pager->getCurrentPage()>1): ?>
+					<?php if ($pager->getCurrentPage()>1): ?>
+				<a class='indexPage' href='<?= $pager->getFirstPage() ?>'>首页</a>
+					<?php endif ?>		
+				<a class='prevPage' href='<?= $pager->getPreviousPageURI() ?>'>上页</a>
+				<?php endif ?>
+				<?php if ($pager->getCurrentPage() < $pager->getPageCount()): ?>
+				<a class='nextPage' href='<?= $pager->getNextPageURI() ?>'>下页</a> 
+					<?php if ($pager->getPageCount()>2): ?>
+				<a class='endPage' href='<?= $pager->getLastPage() ?>'>末页</a>
+					<?php endif ?>
+				<?php endif ?>
 				<span>
-					跳转至<input type="text" id="page_select" name="page_select" value="{{$page}}" size="4" style="width:30px;height:18px;" />
+					跳转至<input type="text" id="page_select" name="page_select" value="{{$pager->getCurrentPage()}}" size="4" style="width:30px;height:18px;" />
 					&nbsp;<input type="button" value="GO" size="10" onClick="gopage()" style="padding:2px 10px;" />
 				</span>
 				<script>
@@ -327,7 +325,7 @@ function ok(ref){
 			</div> 
 		</td>
 	  </tr>
-	  {{/if}}
+	  <?php endif ?>
 	</table>
-    {{/if}}
+    <?php endif ?>
 </div>
