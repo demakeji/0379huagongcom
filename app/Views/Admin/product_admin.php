@@ -291,25 +291,25 @@ function ok(ref){
 		<td><?= esc($gg['Utime']) ?></td>
 		<td align="center">
 			<a href="product_admin.php?do=edit&area={{$gg['AreaCode'])}}&Hpid=<?= esc($gg['Hpid']) ?>&orderby={{$orderby}}&page=“{{$page}}">编辑</a>&nbsp|&nbsp;
-			<a href="product_admin.php?do=del&Hpid="<?= esc($gg['Hpid']) ?>" onClick="return showhidetip(<?= esc($gg['Hpid']) ?>" >删除</a>
+			<a href="product_admin.php?do=del&Hpid=<?= esc($gg['Hpid']) ?>" onClick="return showhidetip(<?= esc($gg['Hpid']) ?>" >删除</a>
 		</td>
 	  </tr>
 	  <?php endforeach ?>
-	  <?php if ($pager->getPageCount()>1): ?>
+	  <?php if ($pager->getPageCount('products') > 1): ?>
 	  <tr bgcolor="#F1FDE3"> 
 		<td height="36" colspan="9" align="center">
 			<div class="pagelistbox">
-				<span>当前第 <font color="FF6600"><?= $pager->getCurrentPage()?></font> 页,共 <?= $pager->getPageCount() ?> 页/ <?= $pager->getTotal() ?> 条记录</span>	
-				<?php if ($pager->getCurrentPage()>1): ?>
-					<?php if ($pager->getCurrentPage()>1): ?>
-				<a class='indexPage' href='<?= $pager->getFirstPage() ?>'>首页</a>
+				<span>当前第 <font color="FF6600"><?= $pager->getCurrentPage('products')?></font> 页,共 <?= $pager->getPageCount('products') ?> 页/ <?= $pager->getTotal('products') ?> 条记录</span>	
+				<?php if ($pager->getCurrentPage('products')>1): ?>
+					<?php if ($pager->getCurrentPage('products')>1): ?>
+				<a class='indexPage' href='<?= $pager->getFirstPage('products') ?>'>首页</a>
 					<?php endif ?>		
-				<a class='prevPage' href='<?= $pager->getPreviousPageURI() ?>'>上页</a>
+				<a class='prevPage' href='<?= $pager->getPreviousPageURI('products') ?>'>上页</a>
 				<?php endif ?>
-				<?php if ($pager->getCurrentPage() < $pager->getPageCount()): ?>
-				<a class='nextPage' href='<?= $pager->getNextPageURI() ?>'>下页</a> 
-					<?php if ($pager->getPageCount()>2): ?>
-				<a class='endPage' href='<?= $pager->getLastPage() ?>'>末页</a>
+				<?php if ($pager->getCurrentPage('products') < $pager->getPageCount('products')): ?>
+				<a class='nextPage' href='<?= $pager->getNextPageURI('products') ?>'>下页</a> 
+					<?php if ($pager->getPageCount('products')>2): ?>
+				<a class='endPage' href='<?= $pager->getLastPage('products') ?>'>末页</a>
 					<?php endif ?>
 				<?php endif ?>
 				<span>

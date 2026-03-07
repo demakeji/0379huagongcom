@@ -8,19 +8,17 @@ use App\Models\HproductsModel;
 
 class Product extends BaseController
 {
-    public function index()
+    public function index(int $page = 2)
     {
         $model = model(HproductsModel::class);
-        //当前页码
-        //$page = 5;
-
+        
         $data = [
-        'result' => $model->paginate(10),
-        'pager' => $model->pager,
+        'result' => $model->paginate(10, 'products', $page),
+        'pager' =>$model->pager,
+        'page' => $page,
         'do' => '',
         ];
-        var_dump($data['pager']);
-
+   
         return view('Admin/product_admin', $data);
     }
 }
