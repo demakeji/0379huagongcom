@@ -13,6 +13,11 @@ use CodeIgniter\Router\FrontRouteCollection;
 /**
  * @var RouteCollection $routes
  */
+// 方式1：基础路由（适配 GET 参数 ?page=xxx）
+$routes->get('admin/product_admin', [Product::class, 'index']);
+// 方式2：URI 分段传页码（适配 admin/product/3）
+$routes->get('admin/product_admin/(:num)', [Product::class, 'index/$1']);
+
 $routes->get('admin', [Admin::class, 'index']);
 $routes->get('admin/index_menu', [Admin::class, 'indexMenu']);
 $routes->get('admin/index_body', [Admin::class, 'indexBody']);

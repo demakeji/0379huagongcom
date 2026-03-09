@@ -274,7 +274,7 @@ function ok(ref){
 	 	 			onMouseOut="javascript:this.bgColor='#FFFFFF';">
 		<td><?= $gg['Hpid']?></td>
 		<td id="title<?= esc($gg['Hpid']) ?>" ><?= esc($gg['title']) ?></td>
-		<td><input name="hanliang" type="text" value="<? esc($gg['hanliang'])?>" size="10"></td>
+		<td><input name="hanliang" type="text" value="<?= esc($gg['hanliang'])?>" size="10"></td>
 		<td><input name="guige" type="text" value="<?= esc($gg['guige']) ?>" size="10"></td>
 		<td><input name="jiage" type="text" value="<?= esc($gg['jiage']) ?>" size="10"></td>
 		<td><input name="kucun" type="text" value="库存" size="10"></td>
@@ -290,8 +290,8 @@ function ok(ref){
 		<td><?= esc($gg['Ptime']) ?></td>
 		<td><?= esc($gg['Utime']) ?></td>
 		<td align="center">
-			<a href="product_admin.php?do=edit&area={{$gg['AreaCode'])}}&Hpid=<?= esc($gg['Hpid']) ?>&orderby={{$orderby}}&page=“{{$page}}">编辑</a>&nbsp|&nbsp;
-			<a href="product_admin.php?do=del&Hpid=<?= esc($gg['Hpid']) ?>" onClick="return showhidetip(<?= esc($gg['Hpid']) ?>" >删除</a>
+			<a href="product_admin?do=edit&Hpid=<?= esc($gg['Hpid']) ?>">编辑</a>&nbsp|&nbsp;
+			<a href="product_admin?do=del&Hpid=<?= esc($gg['Hpid']) ?>" onClick="return showhidetip(<?= esc($gg['Hpid']) ?>" >删除</a>
 		</td>
 	  </tr>
 	  <?php endforeach ?>
@@ -299,21 +299,21 @@ function ok(ref){
 	  <tr bgcolor="#F1FDE3"> 
 		<td height="36" colspan="9" align="center">
 			<div class="pagelistbox">
-				<span>当前第 <font color="FF6600"><?= $pager->getCurrentPage('products')?></font> 页,共 <?= $pager->getPageCount('products') ?> 页/ <?= $pager->getTotal('products') ?> 条记录</span>	
+				<span>当前第 <font color="FF6600"><?= $pager->getCurrentPage('products')?></font> 页,共 <?= $pager->getPageCount() ?> 页/ <?= $pager->getTotal('products') ?> 条记录</span>	
 				<?php if ($pager->getCurrentPage('products')>1): ?>
 					<?php if ($pager->getCurrentPage('products')>1): ?>
-				<a class='indexPage' href='<?= $pager->getFirstPage('products') ?>'>首页</a>
+				<a class='indexPage' href='<?= $pager->getPageURI($pager->getFirstPage('products'), 'products') ?>'>首页</a>
 					<?php endif ?>		
 				<a class='prevPage' href='<?= $pager->getPreviousPageURI('products') ?>'>上页</a>
 				<?php endif ?>
 				<?php if ($pager->getCurrentPage('products') < $pager->getPageCount('products')): ?>
 				<a class='nextPage' href='<?= $pager->getNextPageURI('products') ?>'>下页</a> 
 					<?php if ($pager->getPageCount('products')>2): ?>
-				<a class='endPage' href='<?= $pager->getLastPage('products') ?>'>末页</a>
+				<a class='endPage' href='<?= $pager->getPageURI($pager->getLastPage('products')) ?>'>末页</a>
 					<?php endif ?>
 				<?php endif ?>
 				<span>
-					跳转至<input type="text" id="page_select" name="page_select" value="{{$pager->getCurrentPage()}}" size="4" style="width:30px;height:18px;" />
+					跳转至<input type="text" id="page_select" name="page_select" value="<?= $pager->getCurrentPage('product')?>" size="4" style="width:30px;height:18px;" />
 					&nbsp;<input type="button" value="GO" size="10" onClick="gopage()" style="padding:2px 10px;" />
 				</span>
 				<script>

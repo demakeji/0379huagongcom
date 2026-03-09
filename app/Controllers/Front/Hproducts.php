@@ -17,7 +17,7 @@ class Hproducts extends BaseController
             . view('Front/templates/footer');
     }
 
-    public function detail($id = null)
+    public function detail(?int $id = null)
     {
         $model = model(HproductsModel::class);
 
