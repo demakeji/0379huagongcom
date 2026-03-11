@@ -54,8 +54,10 @@ class Product extends BaseController
 
      // 【增】展示新增表单（无分页）
     public function create()
-    {
-        return view('Admin/Products/create');
+    {   
+        $data['do'] = 'add';
+
+        return view('Admin/product_admin', $data);
     }
 
     // 【增】提交新增数据（新增后跳转列表页，自动保留分页）

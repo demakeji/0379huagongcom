@@ -243,7 +243,7 @@ function ok(ref){
 			   </select>
 			   </td>
 		       <td width="71%" align="right">
-		          <a href="product_admin.php?do=add&type={{$type}}&pn={{$page}}" >新增产品</a>
+		          <a href="product_create" >新增产品</a>
 		       </td>
 		     </tr>
 		   </table>
@@ -299,7 +299,7 @@ function ok(ref){
 	  <tr bgcolor="#F1FDE3"> 
 		<td height="36" colspan="9" align="center">
 			<div class="pagelistbox">
-				<span>当前第 <font color="FF6600"><?= $pager->getCurrentPage('products')?></font> 页,共 <?= $pager->getPageCount() ?> 页/ <?= $pager->getTotal('products') ?> 条记录</span>	
+				<span>当前第 <font color="FF6600"><?= $pager->getCurrentPage('products')?></font> 页,共 <?= $pager->getPageCount('products') ?> 页/ <?= $pager->getTotal('products') ?> 条记录</span>	
 				<?php if ($pager->getCurrentPage('products')>1): ?>
 					<?php if ($pager->getCurrentPage('products')>1): ?>
 				<a class='indexPage' href='<?= $pager->getPageURI($pager->getFirstPage('products'), 'products') ?>'>首页</a>

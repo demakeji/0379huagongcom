@@ -22,6 +22,7 @@ $routes->get('admin', [Admin::class, 'index']);
 $routes->get('admin/index_menu', [Admin::class, 'indexMenu']);
 $routes->get('admin/index_body', [Admin::class, 'indexBody']);
 $routes->get('admin/product_admin', [Product::class, 'index']);
+$routes->get('admin/product_create', [Product::class, 'create']);
 
 
 $routes->get('/', [Hproducts::class, 'index']);
