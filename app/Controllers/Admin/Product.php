@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\HproductsModel;
+use App\Models\ProductCateModel;
 
 class Product extends BaseController
 {
@@ -56,6 +57,10 @@ class Product extends BaseController
     public function create()
     {   
         $data['do'] = 'add';
+        $model = model(ProductCateModel::class);
+
+        $data['prodcatelist'] = $model->getProductCate();
+        $date['one'] = '';
 
         return view('Admin/product_admin', $data);
     }
@@ -63,21 +68,37 @@ class Product extends BaseController
     // 【增】提交新增数据（新增后跳转列表页，自动保留分页）
     public function store()
     {
+        //临时调试：打印所有 POST 数据和验证规则（执行后看日志）
+        log_message('debug', '提交的POST数据：' . print_r($this->request->getPost(), true));
+        log_message('debug', '验证规则：' . print_r($this->HproductsModel->validationRules, true));
+
+        // 1. 数据验证（失败则返回上一页，带输入和错误信息）
         if (!$this->validate($this->HproductsModel->validationRules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $safeTrim = function ($value) {
+            return is_null($value) ? '' : trim($value);
+        };
+
         $productData = [
-            'name'        => $this->request->getPost('name'),
-            'price'       => $this->request->getPost('price'),
-            'status'      => $this->request->getPost('status'),
-            'description' => $this->request->getPost('description'),
+            'Ptitle'    => $safeTrim($this->request->getPost('Ptitle')),
+            'upload'    => $safeTrim($this->request->getPost('upload')),
+            'hanliang'  => $safeTrim($this->request->getPost('hanliang')),
+            'guige'     => $safeTrim($this->request->getPost('guige')),
+            'Price'     => $safeTrim($this->request->getPost('price')), // 修复：POST 是 price（小写）
+            'chandi'    => $safeTrim($this->request->getPost('chandi')),
+            'Pcontent'  => $this->request->getPost('Pcontent') ?: '', // 富文本无需 trim，null 转空字符串
         ];
 
+        // 调试建议：用框架日志替代 var_dump（避免影响重定向）
+        // log_message('debug', '新增产品数据：' . print_r($productData, true));
+
+        // 3. 保存数据到数据库
         $this->HproductsModel->save($productData);
 
-        // 跳转列表页，自动保留当前分页（比如新增后回到第3页）
-        return redirect()->to('/admin/products')->with('success', '产品新增成功！');
+        // 4. 跳转列表页，带成功提示，保留分页
+        return redirect()->to('/admin/product_admin')->with('success', '产品新增成功！');
     }
 
     // 【改】展示编辑表单（无分页）
