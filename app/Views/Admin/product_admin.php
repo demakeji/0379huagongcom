@@ -124,7 +124,7 @@ function ok(ref){
     		<tr>
     			<td align="right"><strong>图片路径：</strong></td>
     			<td>
-					<input type="text" name="image" id="image" size="40" value="<?= empty($one['image']) ? '' : $one['title'] ?>" maxlength="120" />
+					<input type="text" name="image" id="image" size="40" value="<?= empty($one['image']) ? '' : $one['image'] ?>" maxlength="120" />
 					<span class="tip">图片路径优先于新传图片</span>
     			</td>
     		</tr>
