@@ -132,24 +132,47 @@ class Product extends BaseController
         return view('Admin/product_admin', $data);
     }
 
-    // 【改】提交更新数据（更新后跳转列表页，保留分页）
-    public function update(int $id)
+    // 【改】提交更新数据（适配 Hpid 主键）
+    public function update()
     {
+        // 1. 从 POST 获取 Hpid（替代 URI 参数）
+        $hpid = $this->request->getPost('Hpid');
+        // 校验 Hpid 是数字且非空
+        if (!is_numeric($hpid) || $hpid <= 0) {
+            return redirect()->back()->with('error', '无效的产品ID！');
+        }
+
+        // 2. 校验产品是否存在
+        $product = $this->HproductsModel->find($hpid);
+        if (!$product) {
+            return redirect()->back()->with('error', '产品不存在，无法更新！');
+        }
+
+        // 3. 后续验证、更新逻辑和之前一致...
         if (!$this->validate($this->HproductsModel->validationRules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $safeTrim = function ($value) {
+            return is_null($value) ? '' : trim($value);
+        };
+
         $productData = [
-            'id'          => $id,
-            'name'        => $this->request->getPost('name'),
-            'price'       => $this->request->getPost('price'),
-            'status'      => $this->request->getPost('status'),
-            'description' => $this->request->getPost('description'),
+            'Hpid'      => $hpid, // 从 POST 获取的 Hpid
+            'Cid'       => $safeTrim($this->request->getPost('Cid')),
+            'title'     => $safeTrim($this->request->getPost('title')),
+            'image'     => $safeTrim($this->request->getPost('image')),
+            'hanliang'  => $safeTrim($this->request->getPost('hanliang')),
+            'guige'     => $safeTrim($this->request->getPost('guige')),
+            'price'     => $safeTrim($this->request->getPost('price')),
+            'chandi'    => $safeTrim($this->request->getPost('chandi')),
+            'content'   => $this->request->getPost('content') ?: '',
         ];
 
         $this->HproductsModel->save($productData);
 
-        return redirect()->to('/admin/products')->with('success', '产品更新成功！');
+        $page = is_numeric($this->request->getGet('page')) ? $this->request->getGet('page') : 1;
+        return redirect()->to("/admin/product_admin?page={$page}")->with('success', '产品更新成功！');
     }
 
     // 【删】删除产品（删除后跳转列表页，保留分页）

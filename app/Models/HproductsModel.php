@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class HproductsModel extends Model
 {
     protected $table = 'hproducts';
-    protected $primaryKey = 'Hid';
+    protected $primaryKey = 'Hpid';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;

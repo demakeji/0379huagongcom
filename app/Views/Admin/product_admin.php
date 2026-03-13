@@ -52,7 +52,14 @@ function ok(ref){
 		</div>
 	<?php endif; ?>
 	<script type="text/javascript" charset="utf-8" src="ckeditor/ckeditor.js"></script>
-    <form action="product_admin/store" method="post" enctype="multipart/form-data" name="form1" id="form1" onSubmit="return checkform()">
+    <form 
+  	action="<?= site_url($do === 'edit' ? 'admin/product_admin/update' : 'admin/product_admin/store') ?>" 
+  	method="post" 
+  	enctype="multipart/form-data" 
+  	name="form1" 
+  	id="form1" 
+  	onSubmit="return checkform()"
+	>
     	<table width="96%" cellspacing="0" cellpadding="0" class="tb">
     		<tr>
     			<td align="right"><strong><a href="product_admin.php?do=main">返回列表&gt;&gt;</a></strong></td>

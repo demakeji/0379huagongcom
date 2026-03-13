@@ -18,6 +18,7 @@ $routes->get('admin/product_admin', [Product::class, 'index']);
 // 方式2：URI 分段传页码（适配 admin/product/3）
 $routes->get('admin/product_admin/(:num)', [Product::class, 'index/$1']);
 $routes->post('admin/product_admin/store', [Product::class, 'store']);
+$routes->post('admin/product_admin/update', [Product::class, 'update']);
 
 $routes->get('admin', [Admin::class, 'index']);
 $routes->get('admin/index_menu', [Admin::class, 'indexMenu']);
