@@ -82,19 +82,23 @@ class Product extends BaseController
         };
 
         $productData = [
-            'Ptitle'    => $safeTrim($this->request->getPost('Ptitle')),
-            'upload'    => $safeTrim($this->request->getPost('upload')),
+            'Cid'       => $safeTrim($this->request->getPost('Cid')),
+            'title'     => $safeTrim($this->request->getPost('title')),
+            'image'     => $safeTrim($this->request->getPost('image')),
             'hanliang'  => $safeTrim($this->request->getPost('hanliang')),
             'guige'     => $safeTrim($this->request->getPost('guige')),
-            'Price'     => $safeTrim($this->request->getPost('price')), // 修复：POST 是 price（小写）
+            'price'     => $safeTrim($this->request->getPost('price')), // 修复：POST 是 price（小写）
             'chandi'    => $safeTrim($this->request->getPost('chandi')),
-            'Pcontent'  => $this->request->getPost('Pcontent') ?: '', // 富文本无需 trim，null 转空字符串
+            'content'   => $this->request->getPost('Pcontent') ?: '', // 富文本无需 trim，null 转空字符串
         ];
+
 
         // 调试建议：用框架日志替代 var_dump（避免影响重定向）
         // log_message('debug', '新增产品数据：' . print_r($productData, true));
 
-        // 3. 保存数据到数据库
+        log_message('debug', '提交的POST原始数组：' . print_r($productData, true));
+        
+         // 3. 保存数据到数据库
         $this->HproductsModel->save($productData);
 
         // 4. 跳转列表页，带成功提示，保留分页
@@ -104,11 +108,28 @@ class Product extends BaseController
     // 【改】展示编辑表单（无分页）
     public function edit(int $id)
     {
-        $product = $this->HproductsModel->find($id);
+        //临时调试：打印所有 POST 数据和验证规则（执行后看日志）
+        log_message('debug', '产品查询结果：' . print_r($this->HproductsModel->where(['Hpid' => $id])->find(), true));
+
+        $model = model(ProductCateModel::class);
+        $prodcatelist = $model->getProductCate();
+        $product = $this->HproductsModel->where(['Hpid' => $id])->find();
+        
+        if (!$prodcatelist) {
+            return redirect()->to('/admin/products')->with('error', '产品类目获取失败！');
+        }
+
         if (!$product) {
             return redirect()->to('/admin/products')->with('error', '产品不存在！');
         }
-        return view('Admin/Products/edit', ['product' => $product]);
+
+        $data = [
+            'do' => 'edit',
+            'prodcatelist' => $prodcatelist,
+            'one' => $product['0'],
+        ];
+        log_message('debug', '编辑数据封装结果：' . print_r($data, true));
+        return view('Admin/product_admin', $data);
     }
 
     // 【改】提交更新数据（更新后跳转列表页，保留分页）

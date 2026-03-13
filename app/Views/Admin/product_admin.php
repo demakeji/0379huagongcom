@@ -52,7 +52,7 @@ function ok(ref){
 		</div>
 	<?php endif; ?>
 	<script type="text/javascript" charset="utf-8" src="ckeditor/ckeditor.js"></script>
-    <form action="product_admin/create" method="post" enctype="multipart/form-data" name="form1" id="form1" onSubmit="return checkform()">
+    <form action="product_admin/store" method="post" enctype="multipart/form-data" name="form1" id="form1" onSubmit="return checkform()">
     	<table width="96%" cellspacing="0" cellpadding="0" class="tb">
     		<tr>
     			<td align="right"><strong><a href="product_admin.php?do=main">返回列表&gt;&gt;</a></strong></td>
@@ -63,20 +63,39 @@ function ok(ref){
     			<td><label>----基础信息-----------------</label></td>
     		</tr>
 			<tr id="prodcatesele">
-    			<td align="right"><span class="red"> * </span><strong>产品类目：</strong></td>
-    			<td>
-    				<select name="Cid" id="Cid" onChange="ok(this.value)" >
-    				<option value="0">--请选择类目--</option>
-    				<?php foreach ($prodcatelist as $tp): ?>
-						<option value="<?= $tp['Cid'] ?>"><?= $tp['Cname'] ?></option>
-					<?php endforeach ?>
-    				</select>
+				<td align="right"><span class="red"> * </span><strong>产品类目：</strong></td>
+				<td>
+					<select name="Cid" id="Cid" onChange="ok(this.value)" >
+					<option value="0">--请选择类目--</option>
+					<?php 
+					// 容错处理：确保 $prodcatelist 是数组，避免遍历非数组报错
+					if (is_array($prodcatelist) && !empty($prodcatelist)):
+						// 遍历类目列表
+						foreach ($prodcatelist as $tp):
+							// 容错：确保 $tp 包含 Cid/Cname，$one 是数组且包含 Cid
+							$tpCid = isset($tp['Cid']) ? $tp['Cid'] : '';
+							$tpCname = isset($tp['Cname']) ? $tp['Cname'] : '';
+							$oneCid = is_array($one) && isset($one['Cid']) ? $one['Cid'] : '';
+							
+							// 核心：判断当前类目是否是产品所属类目，若是则添加 selected 属性
+							$selected = ($tpCid == $oneCid) ? 'selected' : '';
+					?>
+						<option value="<?= $tpCid ?>" <?= $selected ?>><?= $tpCname ?></option>
+					<?php 
+						endforeach;
+					else:
+						// 无类目数据时的提示
+					?>
+						<option value="">暂无类目</option>
+					<?php endif; ?>
+					</select>
 					<span class="tip"></span>
-    			</td>
-    			<td rowspan="4">
-    				<img alt="" src="<?= empty($one['image']) ? '' : $one['image'] ?> " width="200" height="200">
-    			</td>
-    		</tr>
+				</td>
+				<td rowspan="4">
+					<!-- 优化图片路径的容错处理 -->
+					<img alt="产品图片" src="<?= (is_array($one) && isset($one['image']) && !empty($one['image'])) ? $one['image'] : '' ?> " width="200" height="200">
+				</td>
+			</tr>
     		<!-- <?php if (empty($cateattr)): ?>
     		{{foreach key=tk item=ca from=$cateattr}}
     		<tr class="prodcate">
@@ -91,14 +110,14 @@ function ok(ref){
     		<tr>
     			<td align="right"><span class="red"> * </span><strong>产品标题：</strong></td>
     			<td>
-    				<input type="text" name="Ptitle" id="Ptitle" size="36" value="<?= empty($one['title']) ? '' : $one['title'] ?>" maxlength="24" />
+    				<input type="text" name="title" id="title" size="36" value="<?= empty($one['title']) ? '' : $one['title'] ?>" maxlength="24" />
 					<span class="tip">长度在20个字以内</span>
     			</td>
     		</tr>
     		<tr>
     			<td align="right"><strong>图片路径：</strong></td>
     			<td>
-					<input type="text" name="upload" id="upload" size="40" value="<?= empty($one['image']) ? '' : $one['title'] ?>" maxlength="120" />
+					<input type="text" name="image" id="image" size="40" value="<?= empty($one['image']) ? '' : $one['title'] ?>" maxlength="120" />
 					<span class="tip">图片路径优先于新传图片</span>
     			</td>
     		</tr>
@@ -298,7 +317,7 @@ function ok(ref){
 		<td><?= esc($gg['Ptime']) ?></td>
 		<td><?= esc($gg['Utime']) ?></td>
 		<td align="center">
-			<a href="product_admin?do=edit&Hpid=<?= esc($gg['Hpid']) ?>">编辑</a>&nbsp|&nbsp;
+			<a href="product_edit/<?= esc($gg['Hpid']) ?>">编辑</a>&nbsp|&nbsp;
 			<a href="product_admin?do=del&Hpid=<?= esc($gg['Hpid']) ?>" onClick="return showhidetip(<?= esc($gg['Hpid']) ?>" >删除</a>
 		</td>
 	  </tr>

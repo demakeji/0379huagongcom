@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class HproductsModel extends Model
 {
     protected $table = 'hproducts';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'Hid';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
@@ -15,13 +15,14 @@ class HproductsModel extends Model
     
     // 关键修复1：填充允许批量赋值的字段（和你提交的字段一致）
     protected $allowedFields = [
+        'Cid',       //类目id
         'title',    // 产品标题
         'image',    // 图片路径
         'hanliang',  // 含量
         'guige',     // 规格
         'price',     // 价格
         'chandi',    // 产地
-        'Pcontent'   // 产品内容
+        'content'   // 产品内容
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -39,13 +40,14 @@ class HproductsModel extends Model
 
     // 关键修复2：补充验证规则（和控制器验证逻辑对应）
     protected $validationRules = [
-        'title'   => 'required|max_length[24]',
+        'Cid'      => 'required|numeric',
+        'title'    => 'required|max_length[24]',
         'hanliang' => 'required|numeric',
         'guige'    => 'required|numeric',
         'price'    => 'required|numeric|greater_than[0]',
         'chandi'   => 'required|max_length[50]',
-        'image'   => 'required|max_length[100]',
-        'Pcontent' => 'permit_empty|max_length[2000]',
+        'image'    => 'required|max_length[100]',
+        'content'  => 'permit_empty|max_length[2000]',
     ];
     
     // 可选：自定义验证错误提示（更友好）

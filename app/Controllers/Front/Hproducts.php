@@ -26,8 +26,8 @@ class Hproducts extends BaseController
             $data['hproducts_list'] = $model->getHproductById($id);
 
             return view('templates/header', $data['hproducts_list'])
-            . view('products/detail')
-            . view('templates/footer');
+            . view('Front/products/detail')
+            . view('Front/templates/footer');
         }
     }
 
