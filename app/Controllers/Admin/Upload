@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Controllers;
+
+use CodeIgniter\Controller;
+use CodeIgniter\HTTP\Files\UploadedFile;
+
+class Upload extends Controller
+{
+    /**
+     * 图片上传接口（支持GET展示iframe页面、POST处理上传）
+     */
+    public function importImage()
+    {
+        // GET请求：返回上传iframe页面
+        if ($this->request->getMethod() === 'get') {
+            $data['upimgpath'] = $this->request->getGet('path') ?? 'hproduct';
+            return view('upload/image', $data);
+        }
+
+        // POST请求：处理图片上传
+        $response = [
+            'code' => 1,
+            'msg'  => '上传失败',
+            'path' => ''
+        ];
+
+        try {
+            // 1. 获取上传文件
+            /** @var UploadedFile $file */
+            $file = $this->request->getFile('file');
+            if (!$file || $file->isValid() === false) {
+                $response['msg'] = '请选择有效图片：' . $file->getErrorString();
+                return $this->response->setJSON($response);
+            }
+
+            // 2. 验证文件（类型、大小）
+            $allowedExts = ['jpg', 'jpeg', 'png', 'gif'];
+            $maxSize = 2 * 1024 * 1024; // 2M
+            if (!in_array(strtolower($file->getExtension()), $allowedExts)) {
+                $response['msg'] = '仅支持jpg/jpeg/png/gif格式图片';
+                return $this->response->setJSON($response);
+            }
+            if ($file->getSize() > $maxSize) {
+                $response['msg'] = '图片大小不能超过2M';
+                return $this->response->setJSON($response);
+            }
+
+            // 3. 定义保存路径（public/uploads/hproduct/日期/）
+            $saveDir = 'uploads/hproduct/' . date('Ymd');
+            $absoluteDir = WRITEPATH . '../public/' . $saveDir; // CI4 public目录绝对路径
+            if (!is_dir($absoluteDir)) {
+                mkdir($absoluteDir, 0755, true); // 递归创建目录
+            }
+
+            // 4. 保存文件（生成唯一文件名，避免覆盖）
+            $newFileName = md5(uniqid()) . '.' . $file->getExtension();
+            $file->move($absoluteDir, $newFileName);
+
+            // 5. 拼接可访问的图片路径（CI4 base_url拼接）
+            $imgPath = base_url($saveDir . '/' . $newFileName);
+
+            // 6. 返回成功结果
+            $response = [
+                'code' => 0,
+                'msg'  => '上传成功',
+                'path' => $imgPath
+            ];
+
+            return $this->response->setJSON($response);
+        } catch (\Exception $e) {
+            $response['msg'] = '上传异常：' . $e->getMessage();
+            return $this->response->setJSON($response);
+        }
+    }
+}

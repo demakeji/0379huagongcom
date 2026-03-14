@@ -45,7 +45,8 @@ class Product extends BaseController
             'do'     => '',
             'perPage'=> $perPage         // 每页条数（可选）
         ];
-        
+        // 定义上传路径参数（和上传控制器的路径匹配）
+        $data['upimgpath'] = 'product/images';
         // 调试：打印当前页码（验证是否正确获取）
         // var_dump($pager->getPageURI($pager->getLastPage('products')));
         
@@ -61,6 +62,9 @@ class Product extends BaseController
 
         $data['prodcatelist'] = $model->getProductCate();
         $date['one'] = '';
+
+        // 定义上传路径参数（和上传控制器的路径匹配）
+        $data['upimgpath'] = 'product/images';
 
         return view('Admin/product_admin', $data);
     }
@@ -129,6 +133,9 @@ class Product extends BaseController
             'one' => $product['0'],
         ];
         log_message('debug', '编辑数据封装结果：' . print_r($data, true));
+        // 定义上传路径参数（和上传控制器的路径匹配）
+        $data['upimgpath'] = 'product/images';
+        
         return view('Admin/product_admin', $data);
     }
 
@@ -186,5 +193,52 @@ class Product extends BaseController
         $this->HproductsModel->delete($id);
 
         return redirect()->to('/admin/products')->with('success', '产品删除成功！');
+    }
+
+    /**
+     * 展示产品表单页面（支持编辑回显）
+     */
+    public function form()
+    {
+        // 模拟从数据库查询的编辑数据（实际项目中替换为Model查询）
+        $one = [
+            'id'    => 1,
+            'name'  => '测试产品',
+            // 已有图片路径（示例）
+            'image' => base_url('uploads/hproduct/20260313/123456.jpg') 
+        ];
+
+        // 上传路径参数（传给iframe）
+        $upimgpath = 'hproduct';
+
+        // 赋值给前端视图
+        $data = [
+            'one'       => $one,
+            'upimgpath' => $upimgpath
+        ];
+
+        return view('product/form', $data);
+    }
+
+    /**
+     * 保存表单数据
+     */
+    public function save()
+    {
+        // 获取表单提交的所有数据
+        $postData = $this->request->getPost();
+        // 核心逻辑：优先使用手动输入的图片路径
+        $imagePath = $postData['image'] ?? '';
+
+        // 模拟保存到数据库（实际项目中替换为Model的save/update方法）
+        // $productModel = new \App\Models\ProductModel();
+        // $productModel->save(['id' => $postData['id'], 'image' => $imagePath]);
+
+        // 返回JSON结果
+        return $this->response->setJSON([
+            'code' => 0,
+            'msg'  => '保存成功',
+            'data' => $postData
+        ]);
     }
 }

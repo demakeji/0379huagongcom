@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CI4 图片上传</title>
+    <style>
+        .upload-box { padding: 20px; }
+        .btn-upload { 
+            background: #0071bc; 
+            color: #fff; 
+            border: none; 
+            padding: 8px 15px; 
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+        .tip { 
+            font-size: 12px; 
+            color: #999; 
+            margin-top: 10px; 
+            display: block;
+        }
+        input[type="file"] {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-box">
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" 
+                   name="file" 
+                   id="file" 
+                   accept="image/jpg,image/jpeg,image/png,image/gif" />
+            <button type="button" class="btn-upload" onclick="submitUpload()">上传图片</button>
+            <span class="tip">支持jpg/png/gif格式，最大2M</span>
+        </form>
+    </div>
+
+    <script>
+        // 提交上传请求到CI4接口
+        function submitUpload() {
+            const fileInput = document.getElementById('file');
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert('请先选择要上传的图片！');
+                return;
+            }
+
+            // 构建FormData
+            const formData = new FormData(document.getElementById('uploadForm'));
+            const xhr = new XMLHttpRequest();
+
+            // CI4上传接口地址
+            const uploadUrl = "<?= base_url('upload/image') ?>";
+            xhr.open('POST', uploadUrl, true);
+
+            // 上传成功回调
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const res = JSON.parse(xhr.responseText);
+                    // 发送消息给父页面（主表单）
+                    window.parent.postMessage(JSON.stringify(res), window.parent.location.origin);
+                } else {
+                    window.parent.postMessage(JSON.stringify({
+                        code: 1,
+                        msg: '网络错误：' + xhr.status
+                    }), window.parent.location.origin);
+                }
+            };
+
+            // 上传失败回调
+            xhr.onerror = function() {
+                window.parent.postMessage(JSON.stringify({
+                    code: 1,
+                    msg: '上传失败：网络异常'
+                }), window.parent.location.origin);
+            };
+
+            // 发送请求
+            xhr.send(formData);
+        }
+    </script>
+</body>
+</html>

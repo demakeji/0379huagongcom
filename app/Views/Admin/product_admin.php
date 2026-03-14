@@ -33,6 +33,39 @@ function ok(ref){
 	});
 }
 </script>
+<script>
+        // 1. 根据输入框路径预览图片
+        function previewImage(imgPath) {
+            const preview = document.getElementById('imagePreview');
+            if (imgPath && imgPath.trim()) {
+                preview.src = imgPath;
+                preview.style.display = 'block';
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+        }
+
+        // 2. 监听iframe上传成功的消息（CI4 跨页面通信）
+        window.addEventListener('message', function(e) {
+            // 验证消息来源（生产环境替换为你的域名，如 https://your-domain.com）
+            if (e.origin !== window.location.origin) return;
+            
+            try {
+                const data = JSON.parse(e.data);
+                if (data.code === 0 && data.path) {
+                    // 更新输入框和预览图
+                    document.getElementById('image').value = data.path;
+                    previewImage(data.path);
+                    alert('图片上传成功！');
+                } else {
+                    alert('上传失败：' + (data.msg || '未知错误'));
+                }
+            } catch (err) {
+                console.log('非预期消息格式：', e.data);
+            }
+        }, false);
+    </script>
 <div class="container">
 	<!-- 添加或编辑内容 -->
 	<?php if ($do == 'add'|| $do == 'edit'): ?>
@@ -121,19 +154,53 @@ function ok(ref){
 					<span class="tip">长度在20个字以内</span>
     			</td>
     		</tr>
-    		<tr>
-    			<td align="right"><strong>图片路径：</strong></td>
-    			<td>
-					<input type="text" name="image" id="image" size="40" value="<?= empty($one['image']) ? '' : $one['image'] ?>" maxlength="120" />
-					<span class="tip">图片路径优先于新传图片</span>
-    			</td>
-    		</tr>
-    		<tr class="upimage" >
-    			<td align="right" ><strong>　图片：</strong></td>
-    			<td>
-    				<iframe src="uploadimage.php?type=hproduct&path=<?= empty($upimgpath) ? '' : $upimgpath ?>" frameborder="0" scrolling="no" width="680" height="120" ></iframe>
-    			</td>
-    		</tr>
+    		<form action="<?= base_url('product/save') ?>" method="post">
+        <table>
+            <!-- 图片路径输入 + 预览 -->
+            <tr>
+                <td align="right"><strong>图片路径：</strong></td>
+                <td>
+                    <input type="text" 
+                           name="image" 
+                           id="image" 
+                           size="50" 
+                           value="<?= empty($one['image']) ? '' : $one['image'] ?>" 
+                           maxlength="255" 
+                           onchange="previewImage(this.value)" />
+                    <span class="tip">图片路径优先于新传图片</span>
+                    
+                    <!-- 缩略图预览容器 -->
+                    <div id="previewContainer">
+                        <?php if (!empty($one['image'])): ?>
+                            <img src="<?= $one['image'] ?>" alt="图片预览" id="imagePreview" />
+                        <?php else: ?>
+                            <img src="" alt="图片预览" id="imagePreview" style="display: none;" />
+                        <?php endif; ?>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- iframe上传区域 -->
+            <tr class="upimage">
+                <td align="right"><strong>上传图片：</strong></td>
+                <td>
+                    <iframe src="<?= base_url('upload/image?type=hproduct&path=' . $upimgpath) ?>" 
+                            frameborder="0" 
+                            scrolling="no" 
+                            width="680" 
+                            height="120" 
+                            id="uploadIframe"></iframe>
+                </td>
+            </tr>
+
+            <!-- 保存按钮 -->
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit" class="btn-save">保存</button>
+                </td>
+            </tr>
+        </table>
+    </form>
     		<tr>
     			<td align="right"><strong>产品含量：</strong></td>
     			<td>
