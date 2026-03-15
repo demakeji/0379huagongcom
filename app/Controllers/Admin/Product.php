@@ -114,7 +114,8 @@ class Product extends BaseController
     {
         //临时调试：打印所有 POST 数据和验证规则（执行后看日志）
         log_message('debug', '产品查询结果：' . print_r($this->HproductsModel->where(['Hpid' => $id])->find(), true));
-
+        // 加载表单辅助函数
+        helper('form');
         $model = model(ProductCateModel::class);
         $prodcatelist = $model->getProductCate();
         $product = $this->HproductsModel->where(['Hpid' => $id])->find();

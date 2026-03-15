@@ -8,7 +8,7 @@ use App\Controllers\Front\Feedback;
 use App\Controllers\Front\Contact;
 use App\Controllers\Admin\Admin;
 use App\Controllers\Admin\Product;
-use App\Controllers\Upload;
+use App\Controllers\Admin\Upload;
 
 /**
  * @var CodeIgniter\Router\RouteCollection $routes
@@ -33,7 +33,7 @@ $routes->post('admin/product_admin/delete/(:num)', [Product::class, 'delete'], [
 // --------------------------
 // 图片上传路由
 // --------------------------
-$routes->match(['get', 'post'], 'admin/upload/image', [Upload::class, 'importImage']);
+$routes->match(['GET', 'POST'], 'admin/upload/image', [Upload::class, 'image']);
 
 // --------------------------
 // 前台路由

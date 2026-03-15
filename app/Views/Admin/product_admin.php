@@ -1,71 +1,39 @@
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>管理员后台--洛阳崟生化工有限公司</title>
 <link href='/img/base.css' rel='stylesheet' type='text/css'>
-</head>
-<body background='/img/allbg.gif' leftmargin='8' topmargin='8'>
 <script src="/js/ajax.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/j.js"></script>
 <style type="text/css">
-.tb tr{height:36px;}
-.container{margin-left:20px;}
-.red{color:red;}
-.tip{color:#555;}
+	.tb tr{height:36px;}
+	.container{margin-left:20px;}
+	.red{color:red;}
+	.tip{color:#555;}
 </style>
 <script type="text/javascript">
-function ok(ref){
-	$(".prodcate").each(function(){$(this).remove()});
-	$.ajax({
-		type: "post",
-		data: "do=ajax&Cid="+ref,
-		datatype: "json",
-		url: "product_admin.php",
-		success: function (msg){
-			msg=eval(msg);
-			$("#prodcate2").val(msg.length);
-			$("#prodcate3").val('pro3');
-			for(var i=msg.length-1;i>=0;i--){
-				var txt0="<tr class='prodcate'><td align='right'><strong>"+msg[i].CAname+"：</strong></td><td><input type='text' name='prodcate["+msg[i].CAid+"]' id='prodcate10' size='36' value='' maxlength='24' /><span class='tip'> 长度在20个字以内</span></td></tr>";
-				$("#prodcatesele").after(txt0);
+	function ok(ref){
+		$(".prodcate").each(function(){$(this).remove()});
+		$.ajax({
+			type: "post",
+			data: "do=ajax&Cid="+ref,
+			datatype: "json",
+			url: "product_admin.php",
+			success: function (msg){
+				msg=eval(msg);
+				$("#prodcate2").val(msg.length);
+				$("#prodcate3").val('pro3');
+				for(var i=msg.length-1;i>=0;i--){
+					var txt0="<tr class='prodcate'><td align='right'><strong>"+msg[i].CAname+"：</strong></td><td><input type='text' name='prodcate["+msg[i].CAid+"]' id='prodcate10' size='36' value='' maxlength='24' /><span class='tip'> 长度在20个字以内</span></td></tr>";
+					$("#prodcatesele").after(txt0);
+				}
 			}
-		}
-	});
-}
+		});
+	}
 </script>
-<script>
-        // 1. 根据输入框路径预览图片
-        function previewImage(imgPath) {
-            const preview = document.getElementById('imagePreview');
-            if (imgPath && imgPath.trim()) {
-                preview.src = imgPath;
-                preview.style.display = 'block';
-            } else {
-                preview.src = '';
-                preview.style.display = 'none';
-            }
-        }
-
-        // 2. 监听iframe上传成功的消息（CI4 跨页面通信）
-        window.addEventListener('message', function(e) {
-            // 验证消息来源（生产环境替换为你的域名，如 https://your-domain.com）
-            if (e.origin !== window.location.origin) return;
-            
-            try {
-                const data = JSON.parse(e.data);
-                if (data.code === 0 && data.path) {
-                    // 更新输入框和预览图
-                    document.getElementById('image').value = data.path;
-                    previewImage(data.path);
-                    alert('图片上传成功！');
-                } else {
-                    alert('上传失败：' + (data.msg || '未知错误'));
-                }
-            } catch (err) {
-                console.log('非预期消息格式：', e.data);
-            }
-        }, false);
-    </script>
+</head>
+<body background='/img/allbg.gif' leftmargin='8' topmargin='8'>
 <div class="container">
 	<!-- 添加或编辑内容 -->
 	<?php if ($do == 'add'|| $do == 'edit'): ?>
@@ -154,53 +122,24 @@ function ok(ref){
 					<span class="tip">长度在20个字以内</span>
     			</td>
     		</tr>
-    		<form action="<?= base_url('product/save') ?>" method="post">
-        <table>
-            <!-- 图片路径输入 + 预览 -->
-            <tr>
-                <td align="right"><strong>图片路径：</strong></td>
-                <td>
-                    <input type="text" 
-                           name="image" 
-                           id="image" 
-                           size="50" 
-                           value="<?= empty($one['image']) ? '' : $one['image'] ?>" 
-                           maxlength="255" 
-                           onchange="previewImage(this.value)" />
-                    <span class="tip">图片路径优先于新传图片</span>
-                    
-                    <!-- 缩略图预览容器 -->
-                    <div id="previewContainer">
-                        <?php if (!empty($one['image'])): ?>
-                            <img src="<?= $one['image'] ?>" alt="图片预览" id="imagePreview" />
-                        <?php else: ?>
-                            <img src="" alt="图片预览" id="imagePreview" style="display: none;" />
-                        <?php endif; ?>
-                    </div>
-                </td>
-            </tr>
-
-            <!-- iframe上传区域 -->
-            <tr class="upimage">
-                <td align="right"><strong>上传图片：</strong></td>
-                <td>
-                    <iframe src="<?= base_url('upload/image?type=hproduct&path=' . $upimgpath) ?>" 
-                            frameborder="0" 
-                            scrolling="no" 
-                            width="680" 
-                            height="120" 
-                            id="uploadIframe"></iframe>
-                </td>
-            </tr>
-
-            <!-- 保存按钮 -->
-            <tr>
-                <td colspan="2" align="center">
-                    <button type="submit" class="btn-save">保存</button>
-                </td>
-            </tr>
-        </table>
-    </form>
+    		<tr>
+    			<td align="right"><strong>图片路径：</strong></td>
+    			<td>
+					<input type="text" name="upload" id="upload" size="40" value="{{$one.image}}" maxlength="120" />
+					<span class="tip">图片路径优先于新传图片</span>
+    			</td>
+    		</tr>
+    		<tr class="upimage" >
+    			<td align="right" ><strong>　图片：</strong></td>
+    			<td>
+    				<iframe src="/admin/upload/image" frameborder="0" scrolling="no" width="680" height="120" ></iframe>
+    			</td>
+    		</tr>
+			<?= form_open_multipart('upload/upload') ?>
+    <input type="file" name="userfile" size="20">
+    <br><br>
+    <input type="submit" value="upload">
+</form>
     		<tr>
     			<td align="right"><strong>产品含量：</strong></td>
     			<td>
