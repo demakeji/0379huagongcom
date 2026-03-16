@@ -33,7 +33,7 @@ class Product extends BaseController
         $currentPage = $page ?? $pager->getCurrentPage($group);
         // 安全校验：页码不能小于1
         $currentPage = max(1, $currentPage);
-        
+        //log_message('debug', '首次当前页的页码' . print_r($currentPage, true));
         // 4. 执行分页查询（核心：指定分组，保证 Pager 数据关联）
         $products = $model->paginate($perPage, $group, $currentPage);
         

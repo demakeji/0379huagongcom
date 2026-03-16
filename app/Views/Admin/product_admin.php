@@ -99,10 +99,6 @@
 					</select>
 					<span class="tip"></span>
 				</td>
-				<td rowspan="4">
-					<!-- 优化图片路径的容错处理 -->
-					<img alt="产品图片" src="<?= (is_array($one) && isset($one['image']) && !empty($one['image'])) ? $one['image'] : '' ?> " width="200" height="200">
-				</td>
 			</tr>
     		<!-- <?php if (empty($cateattr)): ?>
     		{{foreach key=tk item=ca from=$cateattr}}
@@ -135,11 +131,6 @@
     				<iframe src="/admin/upload/image" frameborder="0" scrolling="no" width="680" height="120" ></iframe>
     			</td>
     		</tr>
-			<?= form_open_multipart('upload/upload') ?>
-    <input type="file" name="userfile" size="20">
-    <br><br>
-    <input type="submit" value="upload">
-</form>
     		<tr>
     			<td align="right"><strong>产品含量：</strong></td>
     			<td>
@@ -349,11 +340,11 @@
 				<?php if ($pager->getCurrentPage('products') < $pager->getPageCount('products')): ?>
 				<a class='nextPage' href='<?= $pager->getNextPageURI('products') ?>'>下页</a> 
 					<?php if ($pager->getPageCount('products')>2): ?>
-				<a class='endPage' href='<?= $pager->getPageURI($pager->getLastPage('products')) ?>'>末页</a>
+				<a class='endPage' href='<?= $pager->getPageURI($pager->getLastPage('products'), 'products') ?>'>末页</a>
 					<?php endif ?>
 				<?php endif ?>
 				<span>
-					跳转至<input type="text" id="page_select" name="page_select" value="<?= $pager->getCurrentPage('product')?>" size="4" style="width:30px;height:18px;" />
+					跳转至<input type="text" id="page_select" name="page_select" value="<?= $pager->getCurrentPage('products')?>" size="4" style="width:30px;height:18px;" />
 					&nbsp;<input type="button" value="GO" size="10" onClick="gopage()" style="padding:2px 10px;" />
 				</span>
 				<script>
