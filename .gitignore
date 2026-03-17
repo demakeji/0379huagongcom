@@ -125,3 +125,18 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 
+# 忽略上传目录下的所有文件（核心）
+public/upload/
+
+# 忽略CI4的日志/缓存/会话文件
+app/writable/logs/
+app/writable/cache/
+app/writable/session/
+
+# 忽略IDE配置文件（如VS Code）
+.vscode/
+.idea/
+
+# 忽略临时文件
+*.tmp
+*.swp
