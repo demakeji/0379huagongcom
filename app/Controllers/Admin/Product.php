@@ -88,7 +88,7 @@ class Product extends BaseController
         $productData = [
             'Cid'       => $safeTrim($this->request->getPost('Cid')),
             'title'     => $safeTrim($this->request->getPost('title')),
-            'image'     => $safeTrim($this->request->getPost('image')),
+            'image'     => $safeTrim($this->request->getPost('img_path')),
             'hanliang'  => $safeTrim($this->request->getPost('hanliang')),
             'guige'     => $safeTrim($this->request->getPost('guige')),
             'price'     => $safeTrim($this->request->getPost('price')), // 修复：POST 是 price（小写）
@@ -169,7 +169,7 @@ class Product extends BaseController
             'Hpid'      => $hpid, // 从 POST 获取的 Hpid
             'Cid'       => $safeTrim($this->request->getPost('Cid')),
             'title'     => $safeTrim($this->request->getPost('title')),
-            'image'     => $safeTrim($this->request->getPost('image')),
+            'image'     => $safeTrim($this->request->getPost('img_path')),
             'hanliang'  => $safeTrim($this->request->getPost('hanliang')),
             'guige'     => $safeTrim($this->request->getPost('guige')),
             'price'     => $safeTrim($this->request->getPost('price')),

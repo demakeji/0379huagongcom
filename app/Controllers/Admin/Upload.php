@@ -17,13 +17,29 @@ class Upload extends BaseController
 
     public function image()
     {
-        // GET请求：返回上传页面（原有逻辑）
+        // 1. 处理删除图片（原有逻辑）
+        if ($this->request->getGet('act') === 'del') {
+            $imgPath = $this->request->getGet('path');
+            if (!empty($imgPath)) {
+                $absolutePath = WRITEPATH . '../public/' . str_replace(base_url(), '', $imgPath);
+                if (file_exists($absolutePath)) {
+                    unlink($absolutePath);
+                }
+                return view('Admin/upload/image', [
+                    'message' => '图片已删除',
+                    'imagename' => ''
+                ]);
+            }
+        }
+
+        // 2. GET请求：返回上传页面（原有逻辑）
         if ($this->request->getMethod(true) === 'GET') {
             $data['upimgpath'] = trim($this->request->getGet('path') ?? '') ?: 'hproduct';
+            $data['imagename'] = ''; // 初始化预览图路径
             return view('Admin/upload/image', $data);
         }
 
-        // POST请求：处理上传（修改返回逻辑）
+        // 3. POST请求：处理上传（保留JSON返回）
         $response = [
             'code' => 1,
             'msg'  => '上传失败',
@@ -37,13 +53,12 @@ class Upload extends BaseController
             } elseif (!$file->isValid()) {
                 $response['msg'] = '请选择有效图片：' . $file->getErrorString();
             } else {
-                // 原有验证/保存逻辑（不变）
                 $allowedExts = ['jpg', 'jpeg', 'png', 'gif'];
-                $maxSize = 2 * 1024 * 1024;
+                $maxSize = 2 * 1024 * 1024; // 2M（可改为200K：200*1024）
                 if (!in_array(strtolower($file->getExtension()), $allowedExts)) {
                     $response['msg'] = '仅支持jpg/jpeg/png/gif格式图片';
                 } elseif ($file->getSize() > $maxSize) {
-                    $response['msg'] = '图片大小不能超过2M';
+                    $response['msg'] = '图片大小不能超过2M'; // 可改为200K
                 } else {
                     $saveDir = 'upload/hproduct/' . date('Ymd');
                     $absoluteDir = WRITEPATH . '../public/' . $saveDir;
@@ -53,7 +68,6 @@ class Upload extends BaseController
                     $newFileName = md5(uniqid()) . '.' . $file->getExtension();
                     $file->move($absoluteDir, $newFileName);
                     
-                    // 拼接可访问路径
                     $response['code'] = 0;
                     $response['msg'] = '上传成功';
                     $response['path'] = base_url($saveDir . '/' . $newFileName);
@@ -63,9 +77,7 @@ class Upload extends BaseController
             $response['msg'] = '上传异常：' . $e->getMessage();
         }
 
-        // 关键修改：把上传结果传递给上传视图，而非直接返回JSON
-        return view('Admin/upload/image', [
-            'uploadResult' => $response
-        ]);
+        // 核心：保留JSON返回（不传递给视图）
+        return $this->response->setJSON($response);
     }
 }

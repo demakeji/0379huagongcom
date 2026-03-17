@@ -121,7 +121,9 @@
     		<tr>
     			<td align="right"><strong>图片路径：</strong></td>
     			<td>
-					<input type="text" name="upload" id="upload" size="40" value="{{$one.image}}" maxlength="120" />
+					<input type="text" name="upload" id="upload" size="40" value="<?= $one['image'] ?>" maxlength="120" />
+					 <!-- 2. 隐藏输入框：存储最终的图片路径，随表单提交 -->
+        			<input type="hidden" name="img_path" id="img_path" value="<?= $one['image'] ?? '' ?>"
 					<span class="tip">图片路径优先于新传图片</span>
     			</td>
     		</tr>
