@@ -15,13 +15,15 @@
             </td>
             <td>
                 <img id="img" 
-                    src="<?= empty($one['img_path']) ? site_url('img/no_up_form1.jpg') : $one['img_path'] ?>" 
+                    src="<?= empty($img_path) ? site_url('img/no_up_form1.jpg') : $img_path ?>" 
                     height="90" 
                     class="img-preview"/>
-                <?php if (!empty($one['img_path'])): ?>
-                    <a href="<?= site_url('admin/upload/image?act=del&path=' . $one['img_path']) ?>" 
+                <?php if (!empty($img_path)): ?>
+                    <!-- 修改删除按钮：绑定自定义删除函数，去掉原有 href -->
+                    <a href="javascript:void(0);" 
                         class="link-del" 
-                        onclick="return confirm('确定删除这张图片吗？')">删除</a>
+                        data-path="<?= $img_path ?>"
+                        onclick="deleteImage(this)">删除</a>
                 <?php endif; ?>
                 <span class="text-error" id="errorMsg"></span>
             </td>
@@ -33,6 +35,41 @@
 </form>
 
 <script type="text/javascript" >
+function deleteImage(el) {
+    // 1. 弹出确认框
+    if (!confirm('确定删除这张图片吗？')) {
+        return false;
+    }
+    
+    // 2. 清空父页面的 img_path 和 upload 输入框值（核心需求）
+    if (window.parent) {
+        const imgPathInput = window.parent.document.getElementById('img_path');
+        const uploadInput = window.parent.document.getElementById('upload');
+        if (imgPathInput) imgPathInput.value = '';
+        if (uploadInput) uploadInput.value = '';
+    }
+    
+    // 3. 获取图片路径，调用删除接口（保留原有删除逻辑）
+    const imgPath = el.getAttribute('data-path');
+    if (imgPath) {
+        // 发起删除请求
+        $.get("<?= site_url('admin/upload/image') ?>", {
+            act: 'del',
+            path: imgPath
+        }, function(res) {
+            // 删除成功后更新当前页面预览图
+            $("#img").attr("src", "<?= site_url('img/no_up_form1.jpg') ?>");
+            // 隐藏删除按钮
+            $(el).hide();
+            $("#errorMsg").text("图片已删除");
+        }).fail(function() {
+            $("#errorMsg").text("图片删除失败");
+        });
+    }
+    
+    return false;
+}
+
 // 1. 原有校验逻辑（修复 jQuery 语法，调整大小限制为 200K）
 function chkfile() {
     const fileInput = $("#upfile")[0]; // jQuery 转原生 DOM

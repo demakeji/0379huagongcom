@@ -130,7 +130,7 @@
     		<tr class="upimage" >
     			<td align="right" ><strong>　图片：</strong></td>
     			<td>
-    				<iframe src="/admin/upload/image" frameborder="0" scrolling="no" width="680" height="120" ></iframe>
+    				<iframe src="/admin/upload/image?path=<?= $one['img_path'] ?? '' ?>" frameborder="0" scrolling="no" width="680" height="120" ></iframe>
     			</td>
     		</tr>
     		<tr>

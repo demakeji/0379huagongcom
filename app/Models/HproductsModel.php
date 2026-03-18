@@ -46,7 +46,7 @@ class HproductsModel extends Model
         'guige'    => 'required|numeric',
         'price'    => 'required|numeric|greater_than[0]',
         'chandi'   => 'required|max_length[50]',
-        'img_path'    => 'required|max_length[200]',
+        'img_path' => 'permit_empty|max_length[200]',
         'content'  => 'permit_empty|max_length[2000]',
     ];
     

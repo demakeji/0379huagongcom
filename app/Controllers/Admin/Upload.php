@@ -27,8 +27,7 @@ class Upload extends BaseController
 
         // 2. GET请求：返回上传页面（原有逻辑）
         if ($this->request->getMethod(true) === 'GET') {
-            $data['upimgpath'] = trim($this->request->getGet('path') ?? '') ?: 'hproduct';
-            $data['imagename'] = ''; // 初始化预览图路径
+            $data['img_path'] = trim($this->request->getGet('path') ?? '') ?: 'hproduct';
             return view('Admin/upload/image', $data);
         }
 

@@ -170,7 +170,7 @@ class Product extends BaseController
             'Hpid'      => $hpid, // 从 POST 获取的 Hpid
             'Cid'       => $safeTrim($this->request->getPost('Cid')),
             'title'     => $safeTrim($this->request->getPost('title')),
-            'img_path'     => $safeTrim($this->request->getPost('img_path')),
+            'img_path'  => $safeTrim($this->request->getPost('img_path')) ?: '',
             'hanliang'  => $safeTrim($this->request->getPost('hanliang')),
             'guige'     => $safeTrim($this->request->getPost('guige')),
             'price'     => $safeTrim($this->request->getPost('price')),
