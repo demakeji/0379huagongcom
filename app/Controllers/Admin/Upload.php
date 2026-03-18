@@ -8,13 +8,6 @@ use CodeIgniter\Log\Logger;
 
 class Upload extends BaseController
 {
-    protected $logger;
-
-    public function __construct()
-    {
-        $this->logger = service('logger'); // 改用 CI4 推荐的 service 方式获取日志（避免手动实例化）
-    }
-
     public function image()
     {
         // 1. 处理删除图片（原有逻辑）

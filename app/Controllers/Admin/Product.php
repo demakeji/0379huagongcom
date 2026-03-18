@@ -88,7 +88,7 @@ class Product extends BaseController
         $productData = [
             'Cid'       => $safeTrim($this->request->getPost('Cid')),
             'title'     => $safeTrim($this->request->getPost('title')),
-            'image'     => $safeTrim($this->request->getPost('img_path')),
+            'img_path'     => $safeTrim($this->request->getPost('img_path')),
             'hanliang'  => $safeTrim($this->request->getPost('hanliang')),
             'guige'     => $safeTrim($this->request->getPost('guige')),
             'price'     => $safeTrim($this->request->getPost('price')), // 修复：POST 是 price（小写）
@@ -143,6 +143,7 @@ class Product extends BaseController
     // 【改】提交更新数据（适配 Hpid 主键）
     public function update()
     {
+        log_message('debug', '产品查询结果：' . print_r($this->request->getPost('img_path'), true));
         // 1. 从 POST 获取 Hpid（替代 URI 参数）
         $hpid = $this->request->getPost('Hpid');
         // 校验 Hpid 是数字且非空
@@ -164,19 +165,19 @@ class Product extends BaseController
         $safeTrim = function ($value) {
             return is_null($value) ? '' : trim($value);
         };
-
+        
         $productData = [
             'Hpid'      => $hpid, // 从 POST 获取的 Hpid
             'Cid'       => $safeTrim($this->request->getPost('Cid')),
             'title'     => $safeTrim($this->request->getPost('title')),
-            'image'     => $safeTrim($this->request->getPost('img_path')),
+            'img_path'     => $safeTrim($this->request->getPost('img_path')),
             'hanliang'  => $safeTrim($this->request->getPost('hanliang')),
             'guige'     => $safeTrim($this->request->getPost('guige')),
             'price'     => $safeTrim($this->request->getPost('price')),
             'chandi'    => $safeTrim($this->request->getPost('chandi')),
             'content'   => $this->request->getPost('content') ?: '',
         ];
-
+        
         $this->HproductsModel->save($productData);
 
         $page = is_numeric($this->request->getGet('page')) ? $this->request->getGet('page') : 1;
@@ -229,7 +230,7 @@ class Product extends BaseController
         // 获取表单提交的所有数据
         $postData = $this->request->getPost();
         // 核心逻辑：优先使用手动输入的图片路径
-        $imagePath = $postData['image'] ?? '';
+        $imagePath = $postData['img_path'] ?? '';
 
         // 模拟保存到数据库（实际项目中替换为Model的save/update方法）
         // $productModel = new \App\Models\ProductModel();

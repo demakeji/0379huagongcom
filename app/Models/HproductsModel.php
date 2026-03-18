@@ -17,7 +17,7 @@ class HproductsModel extends Model
     protected $allowedFields = [
         'Cid',       //类目id
         'title',    // 产品标题
-        'image',    // 图片路径
+        'img_path',    // 图片路径
         'hanliang',  // 含量
         'guige',     // 规格
         'price',     // 价格
@@ -46,7 +46,7 @@ class HproductsModel extends Model
         'guige'    => 'required|numeric',
         'price'    => 'required|numeric|greater_than[0]',
         'chandi'   => 'required|max_length[50]',
-        'image'    => 'required|max_length[100]',
+        'img_path'    => 'required|max_length[200]',
         'content'  => 'permit_empty|max_length[2000]',
     ];
     

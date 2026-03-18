@@ -4,8 +4,9 @@
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>管理员后台--洛阳崟生化工有限公司</title>
 <link href='/img/base.css' rel='stylesheet' type='text/css'>
-<script src="/js/ajax.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/ajax.js" ></script>
 <script type="text/javascript" src="/js/j.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ckeditor/ckeditor.js"></script>
 <style type="text/css">
 	.tb tr{height:36px;}
 	.container{margin-left:20px;}
@@ -52,7 +53,6 @@
 			<?php endforeach; ?>
 		</div>
 	<?php endif; ?>
-	<script type="text/javascript" charset="utf-8" src="ckeditor/ckeditor.js"></script>
     <form 
   	action="<?= site_url($do === 'edit' ? 'admin/product_admin/update' : 'admin/product_admin/store') ?>" 
   	method="post" 
@@ -83,7 +83,7 @@
 							// 容错：确保 $tp 包含 Cid/Cname，$one 是数组且包含 Cid
 							$tpCid = isset($tp['Cid']) ? $tp['Cid'] : '';
 							$tpCname = isset($tp['Cname']) ? $tp['Cname'] : '';
-							$oneCid = is_array($one) && isset($one['Cid']) ? $one['Cid'] : '';
+							$oneCid = isset($one) && isset($one['Cid']) ? $one['Cid'] : '';
 							
 							// 核心：判断当前类目是否是产品所属类目，若是则添加 selected 属性
 							$selected = ($tpCid == $oneCid) ? 'selected' : '';
@@ -121,9 +121,9 @@
     		<tr>
     			<td align="right"><strong>图片路径：</strong></td>
     			<td>
-					<input type="text" name="upload" id="upload" size="40" value="<?= $one['image'] ?>" maxlength="120" />
+					<input type="text" name="upload" id="upload" size="40" value="<?= $one['img_path'] ?? '' ?>" maxlength="120" />
 					 <!-- 2. 隐藏输入框：存储最终的图片路径，随表单提交 -->
-        			<input type="hidden" name="img_path" id="img_path" value="<?= $one['image'] ?? '' ?>"
+        			<input type="hidden" name="img_path" id="img_path" value="<?= $one['img_path'] ?? '' ?>" />
 					<span class="tip">图片路径优先于新传图片</span>
     			</td>
     		</tr>
