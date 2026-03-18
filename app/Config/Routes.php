@@ -28,7 +28,7 @@ $routes->get('admin/product_create', [Product::class, 'create']);
 $routes->post('admin/product_admin/store', [Product::class, 'store']);
 $routes->get('admin/product_edit/(:num)', [Product::class, 'edit'], ['params' => '$1']);
 $routes->post('admin/product_admin/update', [Product::class, 'update']);
-$routes->post('admin/product_admin/delete/(:num)', [Product::class, 'delete'], ['params' => '$1']);
+$routes->get('admin/product_admin/delete/(:num)', [Product::class, 'destroy'], ['params' => '$1']);
 
 // --------------------------
 // 图片上传路由

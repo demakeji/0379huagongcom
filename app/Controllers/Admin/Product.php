@@ -189,12 +189,12 @@ class Product extends BaseController
     {
         $product = $this->HproductsModel->find($id);
         if (!$product) {
-            return redirect()->to('/admin/products')->with('error', '产品不存在！');
+            return redirect()->to('/admin/product_admin')->with('error', '产品不存在！');
         }
 
         $this->HproductsModel->delete($id);
 
-        return redirect()->to('/admin/products')->with('success', '产品删除成功！');
+        return redirect()->to('/admin/product_admin')->with('success', '产品删除成功！');
     }
 
     /**

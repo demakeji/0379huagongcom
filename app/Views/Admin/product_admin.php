@@ -247,21 +247,6 @@
 	a.start{color:#22ff00}
 	a:hover{text-decoration:underline;}
 	</style>
-	<script type="text/javascript">
-	function goList(){
-		var area=$("#area").val();
-		location.href="?do=main&orderby={{$orderby}}&area="+area;
-		return true;
-	}
-	function showhidetip(id){
-		var title=$("#title"+id).text();
-		if(confirm("确定要对产品"+id+":\""+title+"\"操作吗?")){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	</script>
 	<table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA">
 	  <tr>
 	  	<td height="28" colspan="20" background="/img/tbg.gif">
@@ -276,7 +261,7 @@
 			   </select>
 			   </td>
 		       <td width="71%" align="right">
-		          <a href="product_create" >新增产品</a>
+		          <a href="/admin/product_create" >新增产品</a>
 		       </td>
 		     </tr>
 		   </table>
@@ -323,8 +308,8 @@
 		<td><?= esc($gg['Ptime']) ?></td>
 		<td><?= esc($gg['Utime']) ?></td>
 		<td align="center">
-			<a href="product_edit/<?= esc($gg['Hpid']) ?>">编辑</a>&nbsp|&nbsp;
-			<a href="product_admin?do=del&Hpid=<?= esc($gg['Hpid']) ?>" onClick="return showhidetip(<?= esc($gg['Hpid']) ?>" >删除</a>
+			<a href="/product_edit/<?= esc($gg['Hpid']) ?>">编辑</a>&nbsp|&nbsp;
+			<a href="/admin/product_admin/delete/<?= esc($gg['Hpid']) ?>" onClick="return showhidetip(<?= esc($gg['Hpid']) ?>)" >删除</a>
 		</td>
 	  </tr>
 	  <?php endforeach ?>
@@ -360,5 +345,20 @@
 	  </tr>
 	  <?php endif ?>
 	</table>
+	<script type="text/javascript">
+		function goList(){
+			var area=$("#area").val();
+			location.href="?do=main&orderby={{$orderby}}&area="+area;
+			return true;
+		}
+		function showhidetip(id){
+			var title=$("#title"+id).text();
+			if(confirm("确定要对产品"+id+":\""+title+"\"操作吗?")){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		</script>
     <?php endif ?>
 </div>
