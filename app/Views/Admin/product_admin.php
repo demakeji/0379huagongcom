@@ -308,7 +308,7 @@
 		<td><?= esc($gg['Ptime']) ?></td>
 		<td><?= esc($gg['Utime']) ?></td>
 		<td align="center">
-			<a href="/product_edit/<?= esc($gg['Hpid']) ?>">编辑</a>&nbsp|&nbsp;
+			<a href="/admin/product_edit/<?= esc($gg['Hpid']) ?>">编辑</a>&nbsp|&nbsp;
 			<a href="/admin/product_admin/delete/<?= esc($gg['Hpid']) ?>" onClick="return showhidetip(<?= esc($gg['Hpid']) ?>)" >删除</a>
 		</td>
 	  </tr>
